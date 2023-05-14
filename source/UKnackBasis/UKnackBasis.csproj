@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -8,31 +8,31 @@
 
 	<ItemGroup>
 		<Reference Include="Unity.InputSystem">
-			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\Unity.InputSystem.dll</HintPath>
+		  <HintPath>..\..\UnityUKnackProject\Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEditor.CoreModule">
-			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEditor.CoreModule.dll</HintPath>
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEditor.CoreModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEditor.QuickSearchModule">
-			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEditor.QuickSearchModule.dll</HintPath>
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEditor.QuickSearchModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.AudioModule">
-			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.AudioModule.dll</HintPath>
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEngine.AudioModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.IMGUIModule">
-			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.IMGUIModule.dll</HintPath>
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEngine.IMGUIModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.JSONSerializeModule">
-		  <HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.JSONSerializeModule.dll</HintPath>
+		  <HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEngine.JSONSerializeModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.TextRenderingModule">
-		  <HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.TextRenderingModule.dll</HintPath>
+		  <HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEngine.TextRenderingModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.UIElementsModule">
-			<HintPath>..\..\..\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll</HintPath>
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2021.3.25f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 

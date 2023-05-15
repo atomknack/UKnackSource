@@ -6,7 +6,7 @@ namespace UKnack.Attributes;
 
 [Conditional("UNITY_EDITOR")]
 [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false)]
-public class ValidReferenceAttribute : OneOfMarkingsAttribute //ValidReferenceAttribute
+public class ValidReferenceAttribute : PropertyAttribute //ValidReferenceAttribute
 {
     public readonly Type containerOfValidationMethod;
     public readonly string prefabValidationMethodName;

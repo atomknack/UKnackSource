@@ -12,11 +12,11 @@ namespace UKnack.Attributes;
 [Obsolete("need retest")]
 [Conditional("UNITY_EDITOR")]
 [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false)]
-public class MarkNullAsColorAttribute : OneOfMarkingsAttribute
+public class MarkNullAsColorAttribute : PropertyAttribute
 {
     public readonly Color MarkColor;
     public readonly string NullValueTooltip;
-    public MarkNullAsColorAttribute(float r, float g, float b, string nullValueTooltip)
+    public MarkNullAsColorAttribute(float r, float g, float b, string nullValueTooltip = "")
     {
         MarkColor= new Color(r, g, b);
         NullValueTooltip= nullValueTooltip;

@@ -6,7 +6,7 @@ namespace UKnack.Attributes;
 
 [Conditional("UNITY_EDITOR")]
 [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false)]
-public class ProvidedComponentAttribute : OneOfMarkingsAttribute
+public class ProvidedComponentAttribute : PropertyAttribute
 {
     public static T Provide<T>(GameObject owner, T currentProperty) where T : Component
     {

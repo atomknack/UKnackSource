@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="UKnack.Attributes.ValidReferenceAttribute">
-    <Position X="0.5" Y="8.5" Width="10.75" />
+    <Position X="0.5" Y="6.75" Width="10.75" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -11,7 +11,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="UKnack.Attributes.ProvidedComponentAttribute">
-    <Position X="0.5" Y="5.75" Width="6" />
+    <Position X="0.5" Y="5" Width="6" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAA=</HashCode>
       <FileName>Attributes\ProvidedComponentAttribute.cs</FileName>
@@ -27,80 +27,6 @@
       <FileName>Attributes\MarkNullAsColorAttribute.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UKnack.Attributes.KnackAttributeDrawers.ValidReferenceAttributeDrawer" Collapsed="true">
-    <Position X="8.75" Y="7.75" Width="2.5" />
-    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" ManuallyRouted="true">
-      <Path>
-        <Point X="8.875" Y="5.191" />
-        <Point X="8.875" Y="5.491" />
-        <Point X="10" Y="5.491" />
-        <Point X="10" Y="7.75" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>ACAAAAAAAAAAAAAAUAAgAAAAAAEAEAAAAAAQAAAAAAA=</HashCode>
-      <FileName>Attributes\KnackAttributeDrawers\ValidReferenceAttributeDrawer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="UKnack.Attributes.KnackAttributeDrawers.MarkNullAsColorAttributeDrawer" Collapsed="true">
-    <Position X="5.5" Y="3.25" Width="2.5" />
-    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.OneOfMarksAttributeDrawer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="8.875" Y="2.691" />
-        <Point X="8.875" Y="3.562" />
-        <Point X="8" Y="3.562" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAAQAgAIAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Attributes\KnackAttributeDrawers\MarkNullAsColorAttributeDrawer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="UKnack.Attributes.KnackAttributeDrawers.ProvidedComponentAttributeDrawer" Collapsed="true">
-    <Position X="6.5" Y="5.75" Width="2.75" />
-    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" ManuallyRouted="true" FixedToPoint="true">
-      <Path>
-        <Point X="8.875" Y="5.191" />
-        <Point X="8.875" Y="5.491" />
-        <Point X="7.875" Y="5.491" />
-        <Point X="7.875" Y="5.75" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAABAQAAAAAgEAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Attributes\KnackAttributeDrawers\ProvidedComponentAttributeDrawer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="UKnack.Attributes.KnackAttributeDrawers.OneOfMarksAttributeDrawer" Collapsed="true">
-    <Position X="6.5" Y="2" Width="4.75" />
-    <InheritanceLine Type="UnityEditor.PropertyDrawer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="8.861" Y="1.191" />
-        <Point X="8.861" Y="1.277" />
-        <Point X="8.875" Y="1.277" />
-        <Point X="8.875" Y="2" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAEQAAQAAAIAAEAIAAAAAAAACAAAAAAAA=</HashCode>
-      <FileName>Attributes\KnackAttributeDrawers\OneOfMarksAttributeDrawer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" Collapsed="true">
-    <Position X="7.5" Y="4.5" Width="2.75" />
-    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.OneOfMarksAttributeDrawer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="8.875" Y="2.691" />
-        <Point X="8.875" Y="3.564" />
-        <Point X="8.875" Y="3.564" />
-        <Point X="8.875" Y="4.5" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAgAAAAggAAAAAAgAAAYABkAAAAAAAQAAAgAAAAAAA=</HashCode>
-      <FileName>Attributes\KnackAttributeDrawers\AbstractReferenceWithPickerDrawer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="UKnack.Attributes.DisableEditingInPlaymodeAttribute">
     <Position X="0.5" Y="0.5" Width="3" />
     <TypeIdentifier>
@@ -108,22 +34,85 @@
       <FileName>Attributes\DisableEditingInPlaymodeAttribute.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UKnack.Attributes.KnackAttributeDrawers.DisableEditingInPlaymodeAttributeDrawer" Collapsed="true">
-    <Position X="3.5" Y="0.5" Width="3" />
-    <InheritanceLine Type="UnityEditor.PropertyDrawer" FixedFromPoint="true" FixedToPoint="true">
+  <Class Name="UnityEditor.PropertyDrawer" Collapsed="true">
+    <Position X="8.75" Y="0.75" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="UKnack.Attributes.KnackAttributeDrawers.OneOfMarksAttributeDrawer" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="3.5" />
+    <InheritanceLine Type="UnityEditor.PropertyDrawer" FixedFromPoint="true">
       <Path>
-        <Point X="7.75" Y="0.875" />
-        <Point X="6.5" Y="0.875" />
+        <Point X="9.5" Y="1.441" />
+        <Point X="9.5" Y="1.75" />
       </Path>
     </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAEQAAQAAAIAAEAIAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Attributes\KnackAttributeDrawers\OneOfMarksAttributeDrawer_MarkAttributeTypes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UKnack.Attributes.KnackAttributeDrawers.DisableEditingInPlaymodeAttributeDrawer" Collapsed="true">
+    <Position X="3" Y="0.75" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAAAAAAAAQAAAIAAEAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>Attributes\KnackAttributeDrawers\DisableEditingInPlaymodeAttributeDrawer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UnityEditor.PropertyDrawer" Collapsed="true">
-    <Position X="7.75" Y="0.5" Width="2.5" />
-    <TypeIdentifier />
+  <Class Name="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" Collapsed="true">
+    <Position X="6.25" Y="2.75" Width="5" />
+    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.OneOfMarksAttributeDrawer" FixedToPoint="true">
+      <Path>
+        <Point X="9.5" Y="2.441" />
+        <Point X="9.5" Y="2.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAggAAAAAAgAAAYABkAAAAAAAQAAAgAAAAAAA=</HashCode>
+      <FileName>Attributes\KnackAttributeDrawers\AbstractReferenceWithPickerDrawer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UKnack.Attributes.KnackAttributeDrawers.MarkNullAsColorAttributeDrawer" Collapsed="true">
+    <Position X="2.75" Y="2.75" Width="2.25" />
+    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="3" />
+        <Point X="5" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\KnackAttributeDrawers\MarkNullAsColorAttributeDrawer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UKnack.Attributes.KnackAttributeDrawers.ProvidedComponentAttributeDrawer" Collapsed="true">
+    <Position X="5.5" Y="5.25" Width="3" />
+    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="7" Y="3.441" />
+        <Point X="7" Y="4.346" />
+        <Point X="7" Y="4.346" />
+        <Point X="7" Y="5.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAQAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\KnackAttributeDrawers\ProvidedComponentAttributeDrawer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UKnack.Attributes.KnackAttributeDrawers.ValidReferenceAttributeDrawer" Collapsed="true">
+    <Position X="8.25" Y="6.25" Width="2.5" />
+    <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10" Y="3.441" />
+        <Point X="10" Y="4.907" />
+        <Point X="10" Y="4.907" />
+        <Point X="10" Y="6.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAUAAgAAAAAAEAEAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Attributes\KnackAttributeDrawers\ValidReferenceAttributeDrawer.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -48,7 +48,7 @@
     </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAEQAAQAAAIAAEAIAAAAAAAACAAAAAAAA=</HashCode>
-      <FileName>Attributes\KnackAttributeDrawers\OneOfMarksAttributeDrawer_MarkAttributeTypes.cs</FileName>
+      <FileName>Attributes\KnackAttributeDrawers\OneOfMarksAttributeDrawer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UKnack.Attributes.KnackAttributeDrawers.DisableEditingInPlaymodeAttributeDrawer" Collapsed="true">
@@ -67,12 +67,12 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAgAAAAggAAAAAAgAAAYABkAAAAAAAQAAAgAAAAAAA=</HashCode>
+      <HashCode>AAAgAAAAggAAAAAAgAAAYAFkAAAAAAAQAAAgAAAAAAA=</HashCode>
       <FileName>Attributes\KnackAttributeDrawers\AbstractReferenceWithPickerDrawer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UKnack.Attributes.KnackAttributeDrawers.MarkNullAsColorAttributeDrawer" Collapsed="true">
-    <Position X="2.75" Y="2.75" Width="2.25" />
+    <Position X="2.25" Y="2.75" Width="2.75" />
     <InheritanceLine Type="UKnack.Attributes.KnackAttributeDrawers.AbstractReferenceWithPickerDrawer" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="6.25" Y="3" />
@@ -80,7 +80,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AACAAAAAAAAAAABAQAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Attributes\KnackAttributeDrawers\MarkNullAsColorAttributeDrawer.cs</FileName>
     </TypeIdentifier>
   </Class>

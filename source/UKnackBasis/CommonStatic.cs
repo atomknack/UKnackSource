@@ -4,7 +4,6 @@ namespace UKnack;
 
 public static partial class CommonStatic
 {
-
     public static string GetFullPath_Recursive(GameObject go) =>
         go.transform.parent == null ? go.name : GetTransformPath_Recursive(go.transform.parent) + "/" + go.name;
     public static string GetTransformPath_Recursive(Transform trans) =>

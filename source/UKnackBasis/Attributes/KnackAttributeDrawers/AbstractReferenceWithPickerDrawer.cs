@@ -166,13 +166,17 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
         list.Add(t);
     }
 
-    protected static void DrawCustomButtonBackground(List<Type> subtypes, Rect position)
+    protected static void DrawCustomButtonBackground(List<Type> subtypes, Rect position) =>
+        DrawCustomButtonBackground(subtypes, position, Color.black);
+
+    protected static void DrawCustomButtonBackground(List<Type> subtypes, Rect position, Color color)
     {
         if (subtypes == null || subtypes.Count == 0)
             return;
-        EditorGUI.DrawRect(new Rect(position.x - 2, position.y - 2, 22, position.height + 4), Color.black);
+        EditorGUI.DrawRect(new Rect(position.x - 2, position.y - 2, 22, position.height + 4), color);
     }
-    protected static void DrawCustomPickerButton(List<Type> subtypes, Rect position)
+
+    protected static void DrawCustomPickerButton(IReadOnlyList<Type> subtypes, Rect position)
     {
         if (subtypes == null || subtypes.Count == 0)
             return;

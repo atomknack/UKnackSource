@@ -32,7 +32,7 @@ public class ProvidedComponentAttributeDrawer : AbstractReferenceWithPickerDrawe
 
         Type providedType = GetTypeFromFieldInfo(fieldInfo); //((ProvidedByGameobjectAttribute)attribute).providedType;
 
-        FillSubtypes();
+        MarkNullAsColorAttributeDrawer.FillSubtypesDefault(ref _subtypes, this);
 
         DrawCustomPickerButton(_subtypes, position);
         var subFieldPosition = new Rect(position.x + 22, position.y, position.width - 22, position.height);
@@ -111,14 +111,6 @@ public class ProvidedComponentAttributeDrawer : AbstractReferenceWithPickerDrawe
 
     }
 
-    void FillSubtypes()
-    {
-        if (_subtypes != null)
-            return;
-        Type baseFieldType = GetTypeFromFieldInfo(fieldInfo);
-        _subtypes = new List<Type>();
-        AddUniquePickerType(_subtypes, baseFieldType);
-    }
     /*
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {

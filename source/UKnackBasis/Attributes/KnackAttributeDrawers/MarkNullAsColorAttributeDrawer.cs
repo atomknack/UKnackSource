@@ -3,6 +3,7 @@
 /// https://github.com/redbluegames/unity-notnullattribute/blob/master/Assets/RedBlueGames/NotNullAttribute/NotNullAttribute.cs
 
 using System;
+using System.Collections.Generic;
 using UKnack.Attributes;
 using UnityEditor;
 using UnityEngine;
@@ -12,21 +13,61 @@ namespace UKnack.Attributes.KnackAttributeDrawers;
 
 //[CustomPropertyDrawer(typeof(MarkNullAsRedAttribute))]
 [CustomPropertyDrawer(typeof(MarkNullAsColorAttribute))]
-public class MarkNullAsColorAttributeDrawer : OneOfMarksAttributeDrawer
+public class MarkNullAsColorAttributeDrawer : AbstractReferenceWithPickerDrawer
 {
     private MarkNullAsColorAttribute markColor => (MarkNullAsColorAttribute)attribute;
 
-    protected override bool BeforeDrawProperty(Rect position, SerializedProperty property, GUIContent label) 
-        => true;
+    //protected override bool BeforeDrawProperty(Rect position, SerializedProperty property, GUIContent label) 
+    //    => true;
 
     protected override void DrawProperty(Rect position, SerializedProperty property, GUIContent label)
     {
-        DrawMarked(position, property, label, markColor.MarkColor, markColor.NullValueTooltip);
-    }
-    protected override void AfterDrawProperty(Rect position, SerializedProperty property, GUIContent label)
-    {
+        string nullValueTooltip = markColor.NullValueTooltip;
+
+        FillSubtypesDefault(ref _subtypes, this);
+
+        Color pickerButtonBackground = ColorHelpers.WithNewAlpha(ColorHelpers.MultipliedRGB(ColorHelpers.InvertedRGB(markColor.MarkColor),0.4f),1);
+        if (property.objectReferenceValue == null)
+        {
+            EditorGUI.DrawRect(new Rect(position.x - 2, position.y - 2, position.width + 4, position.height + 4), markColor.MarkColor);
+            DrawCustomButtonBackground(_subtypes, position, ColorHelpers.WithNewAlpha(pickerButtonBackground,0.5f));
+            DrawCustomPickerButton(_subtypes, position);
+            EditorGUI.PropertyField(position,
+                property,
+                new GUIContent(label.text,
+                    label.image,
+                    String.IsNullOrWhiteSpace(label.tooltip) ?
+                        nullValueTooltip :
+                        $"{nullValueTooltip}, additional tooltip:{label.tooltip}"), true);
+            return;
+        }
+        DrawCustomButtonBackground(_subtypes, position, new Color(0, 0, 0, 0.7f));
+        EditorGUI.DrawRect(KnackPickerButtonPosition(position), new Color(1,1,1,0.1f));
+        DrawCustomPickerButton(_subtypes, position);
+        EditorGUI.PropertyField(position, property, label, true);
+
+        //DrawMarked(position, property, label, markColor.MarkColor, markColor.NullValueTooltip);
+
     }
 
+    //protected override void AfterDrawProperty(Rect position, SerializedProperty property, GUIContent label)
+    //{
+    //}
+
+
+
+
+    internal static void FillSubtypesDefault(ref List<Type> subtypes, PropertyDrawer drawer)
+    {
+        if (subtypes != null)
+            return;
+        Type baseFieldType = GetTypeFromFieldInfo(drawer.fieldInfo);
+        subtypes = new List<Type>();
+        AddUniquePickerType(subtypes, baseFieldType);
+    }
+
+    /*
+     
     public static void DrawMarked(Rect position, SerializedProperty property, GUIContent label, Color markColor, string nullValueTooltip = "This field should be set to value")
     {
 
@@ -54,8 +95,8 @@ public class MarkNullAsColorAttributeDrawer : OneOfMarksAttributeDrawer
 
         EditorGUI.PropertyField(position, property, label, true);
     }
-
-    /*
+      
+     
 public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 {
     if(CannotDrawBecauseIncorrectNumberOfAttributes(position))

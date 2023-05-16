@@ -67,7 +67,7 @@ public class ValidReferenceAttributeDrawer : AbstractReferenceWithPickerDrawer
         //bool guiEnabled = GUI.enabled;
         //GUI.enabled = false;
         EditorGUI.DrawRect(new Rect(position.x, position.y, position.width + 2, position.height), DrawersSettings.fieldPassedVerification);
-        DrawCustomPickerButton(_subtypes, position);
+        DrawCustomPickerButton(_subtypes, position, IsPlayingAndDisabled);
         GUIContent newLabel = new GUIContent();
         newLabel.image = label.image;
         newLabel.text = label.text;
@@ -83,7 +83,7 @@ public class ValidReferenceAttributeDrawer : AbstractReferenceWithPickerDrawer
     {
         DrawCustomButtonBackground(_subtypes, position);
         EditorGUI.DrawRect(new Rect(position.x, position.y, position.width + 2, position.height), DrawersSettings.fieldExceptionAtVerification);
-        DrawCustomPickerButton(_subtypes, position);
+        DrawCustomPickerButton(_subtypes, position, IsPlayingAndDisabled);
         EditorGUI.PropertyField(position, property, new GUIContent(label.text, label.image, $"Reference verification exception: {(e.InnerException == null ? e : e.InnerException)}  {s_showPopupMenu}"), true);
 
     }

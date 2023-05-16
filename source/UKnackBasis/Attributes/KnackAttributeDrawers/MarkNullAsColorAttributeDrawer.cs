@@ -24,14 +24,14 @@ public class MarkNullAsColorAttributeDrawer : AbstractReferenceWithPickerDrawer
     {
         string nullValueTooltip = markColor.NullValueTooltip;
 
-        FillSubtypesDefault(ref _subtypes, this);
+        FillSubtypes();
 
         Color pickerButtonBackground = ColorHelpers.WithNewAlpha(ColorHelpers.MultipliedRGB(ColorHelpers.InvertedRGB(markColor.MarkColor),0.4f),1);
         if (property.objectReferenceValue == null)
         {
             EditorGUI.DrawRect(new Rect(position.x - 2, position.y - 2, position.width + 4, position.height + 4), markColor.MarkColor);
             DrawCustomButtonBackground(_subtypes, position, ColorHelpers.WithNewAlpha(pickerButtonBackground,0.5f));
-            DrawCustomPickerButton(_subtypes, position);
+            DrawCustomPickerButton(_subtypes, position, IsPlayingAndDisabled);
             EditorGUI.PropertyField(position,
                 property,
                 new GUIContent(label.text,
@@ -43,7 +43,7 @@ public class MarkNullAsColorAttributeDrawer : AbstractReferenceWithPickerDrawer
         }
         DrawCustomButtonBackground(_subtypes, position, new Color(0, 0, 0, 0.7f));
         EditorGUI.DrawRect(KnackPickerButtonPosition(position), new Color(1,1,1,0.1f));
-        DrawCustomPickerButton(_subtypes, position);
+        DrawCustomPickerButton(_subtypes, position, IsPlayingAndDisabled);
         EditorGUI.PropertyField(position, property, label, true);
 
         //DrawMarked(position, property, label, markColor.MarkColor, markColor.NullValueTooltip);
@@ -55,7 +55,10 @@ public class MarkNullAsColorAttributeDrawer : AbstractReferenceWithPickerDrawer
     //}
 
 
-
+    public virtual void FillSubtypes()
+    {
+        FillSubtypesDefault(ref _subtypes, this);
+    }
 
     internal static void FillSubtypesDefault(ref List<Type> subtypes, PropertyDrawer drawer)
     {

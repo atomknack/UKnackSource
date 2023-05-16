@@ -61,9 +61,8 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
 
         if (GUI.enabled == false)
             return;
-        /// Unlike before this will disable picker if attributes order is incorrect
-        var _playmodeDisabled = fieldInfo.GetCustomAttribute(typeof(DisableEditingInPlaymodeAttribute), true);
-        if (_playmodeDisabled != null && Application.isPlaying)
+
+        if (IsPlayingAndDisabled)
             return;
 
 
@@ -155,6 +154,17 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
                         */
     }
 
+    protected bool IsPlayingAndDisabled
+    {
+        get
+        {
+            var _playmodeDisabled = fieldInfo.GetCustomAttribute(typeof(DisableEditingInPlaymodeAttribute), true);
+            if (_playmodeDisabled != null && Application.isPlaying)
+                return true;
+            return false;
+        }
+    }
+
     protected static void AddUniquePickerType(List<Type> list, Type t, Type baseFieldType = null)
     {
         if (t == typeof(UnityEngine.Object))
@@ -176,7 +186,7 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
         EditorGUI.DrawRect(new Rect(position.x - 2, position.y - 2, 22, position.height + 4), color);
     }
 
-    protected static void DrawCustomPickerButton(IReadOnlyList<Type> subtypes, Rect position)
+    protected static void DrawCustomPickerButton(IReadOnlyList<Type> subtypes, Rect position, bool disabled)
     {
         if (subtypes == null || subtypes.Count == 0)
             return;
@@ -186,7 +196,7 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
         Event e = Event.current;
         if (e == null)
             return;
-        if (buttonPosition.Contains(e.mousePosition))
+        if (buttonPosition.Contains(e.mousePosition) && disabled == false)
             EditorGUI.DrawRect(buttonPosition, new Color(0.12f, 0.12f, 0.12f));
 
         if (subtypes.Count > 1)

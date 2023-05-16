@@ -34,7 +34,7 @@ public class ProvidedComponentAttributeDrawer : AbstractReferenceWithPickerDrawe
 
         MarkNullAsColorAttributeDrawer.FillSubtypesDefault(ref _subtypes, this);
 
-        DrawCustomPickerButton(_subtypes, position);
+        DrawCustomPickerButton(_subtypes, position, IsPlayingAndDisabled);
         var subFieldPosition = new Rect(position.x + 22, position.y, position.width - 22, position.height);
 
         Component currentValue = (Component)property.objectReferenceValue;
@@ -73,7 +73,7 @@ public class ProvidedComponentAttributeDrawer : AbstractReferenceWithPickerDrawe
                 } */
                 Color yellowColor = new Color(1f, 0.8f, 0, 0.2f);
                 EditorGUI.DrawRect(new Rect(position.x - 2, position.y - 2, position.width + 4, position.height + 4), yellowColor);
-                DrawCustomPickerButton(_subtypes, position);
+                DrawCustomPickerButton(_subtypes, position, IsPlayingAndDisabled);
                 EditorGUI.PropertyField(subFieldPosition, 
                     property, 
                     new GUIContent(label.text, label.image, "This field can be set to Null, so it can be be provided by gameobject, because gameobject has one"), true);
@@ -83,7 +83,7 @@ public class ProvidedComponentAttributeDrawer : AbstractReferenceWithPickerDrawe
             string tooltip = "This property has corresponding providable monobehaviour, you should use retrieve it by GetComponent<> in your init method(Awake, Start, OnEnable, etc ...)";
             DrawCustomButtonBackground(_subtypes, position);
             EditorGUI.DrawRect(position, new Color(0.1f, 0.1f, 0.7f, 0.4f));
-            DrawCustomPickerButton(_subtypes, position);
+            DrawCustomPickerButton(_subtypes, position, IsPlayingAndDisabled);
 
             string by = provided.gameObject == _asComponent.gameObject ? "this gameObject" : $"\"{provided.gameObject.name}\"";
             EditorGUI.LabelField(subFieldPosition, new GUIContent($"\"{label.text}\" provided by {by}", tooltip));

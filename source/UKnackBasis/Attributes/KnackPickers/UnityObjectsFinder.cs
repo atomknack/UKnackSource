@@ -121,7 +121,7 @@ namespace UKnack.Attributes.KnackPickers
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-
+                //Debug.Log(path);
 
                 if (path.EndsWith(".unity"))
                 {

@@ -1,0 +1,3 @@
+[submodule "UKnackBasis"]
+	path = UKnackBasis
+	url = https://github.com/atomknack/UKnackBasis.git

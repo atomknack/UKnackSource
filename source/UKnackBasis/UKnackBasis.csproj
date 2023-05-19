@@ -13,7 +13,7 @@
 	
 	<ItemGroup>
 		<Reference Include="Unity.InputSystem">
-		  <HintPath>..\..\UnityUKnackProject\Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
+		  <HintPath>..\..\UKnackBasis\Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEditor.CoreModule">
 			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEditor.CoreModule.dll</HintPath>
@@ -40,5 +40,14 @@
 			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+
+	<Target Name="PostPostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'DebugUnityEditor' ">
+			<Copy SourceFiles="bin\DebugUnityEditor\netstandard2.1\UKnackBasis.dll" DestinationFiles="..\..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackEditorDebugVersion\UKnackBasis.dll"></Copy>
+			<Copy SourceFiles="bin\DebugUnityEditor\netstandard2.1\UKnackBasis.pdb" DestinationFiles="..\..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackEditorDebugVersion\UKnackBasis.pdb"></Copy>
+	</Target>
+	<Target Name="PostPostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release' ">
+		<Copy SourceFiles="bin\Release\netstandard2.1\UKnackBasis.dll" DestinationFiles="..\..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackReleaseVersion\UKnackBasis.dll"></Copy>
+		<Copy SourceFiles="bin\Release\netstandard2.1\UKnackBasis.pdb" DestinationFiles="..\..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackReleaseVersion\UKnackBasis.pdb"></Copy>
+	</Target>
 
 </Project>

@@ -41,11 +41,12 @@
 		</Reference>
 	</ItemGroup>
 
-	<Target Name="PostPostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'DebugUnityEditor' ">
-			<Copy SourceFiles="bin\DebugUnityEditor\netstandard2.1\UKnackBasis.dll" DestinationFiles="..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackEditorDebugVersion\UKnackBasis.dll"></Copy>
-			<Copy SourceFiles="bin\DebugUnityEditor\netstandard2.1\UKnackBasis.pdb" DestinationFiles="..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackEditorDebugVersion\UKnackBasis.pdb"></Copy>
+	<Target Name="PostPostBuild_DebugUnityEditor" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'DebugUnityEditor' ">
+		<Copy SourceFiles="bin\DebugUnityEditor\netstandard2.1\UKnackBasis.dll" DestinationFiles="..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackEditorDebugVersion\UKnackBasis.dll"></Copy>
+		<Copy SourceFiles="bin\DebugUnityEditor\netstandard2.1\UKnackBasis.pdb" DestinationFiles="..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackEditorDebugVersion\UKnackBasis.pdb"></Copy>
+		<Message Text="po s t bu il d POSTBUILD message" />
 	</Target>
-	<Target Name="PostPostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release' ">
+	<Target Name="PostPostBuild_Release" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release' ">
 		<Copy SourceFiles="bin\Release\netstandard2.1\UKnackBasis.dll" DestinationFiles="..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackReleaseVersion\UKnackBasis.dll"></Copy>
 		<Copy SourceFiles="bin\Release\netstandard2.1\UKnackBasis.pdb" DestinationFiles="..\..\UKnackBasis\Packages\com.atomknack.uknackbasis\UKnackReleaseVersion\UKnackBasis.pdb"></Copy>
 	</Target>

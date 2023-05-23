@@ -6,10 +6,6 @@ using UnityEngine;
 
 namespace UKnack.Attributes;
 
-/// <summary>
-/// MarkEmptyAsRed will draw red if value not set in UnityEditor
-/// </summary>
-[Obsolete("need retest")]
 [Conditional("UNITY_EDITOR")]
 [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false)]
 public class MarkNullAsColorAttribute : PropertyAttribute

@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<LangVersion>9.0</LangVersion>
+	<Configurations>Debug;Release;DebugUnityEditor</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UKnackBasis\UKnackBasis.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="$(Configuration.Contains('UnityEditor'))">
+	<DefineConstants>$(DefineConstants);UNITY_EDITOR</DefineConstants>
+  </PropertyGroup>
+	
+	<ItemGroup>
+		<Reference Include="Unity.InputSystem">
+		  <HintPath>..\..\UKnackBasis\Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEditor.CoreModule">
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEditor.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEditor.QuickSearchModule">
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEditor.QuickSearchModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AudioModule">
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.AudioModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.IMGUIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.JSONSerializeModule">
+		  <HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.JSONSerializeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+		  <HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.TextRenderingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIElementsModule">
+			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	
+
+</Project>

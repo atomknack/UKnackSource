@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UKnackBasis", "UKnackBasis\UKnackBasis.csproj", "{77CC2114-9934-4F61-8284-DDBCF3D150F4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UKnackBasisConcrete", "UKnackBasisConcrete\UKnackBasisConcrete.csproj", "{C62D30DF-CAD6-4585-B1A7-2C4F66F0BF41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,12 @@ Global
 		{77CC2114-9934-4F61-8284-DDBCF3D150F4}.DebugUnityEditor|Any CPU.Build.0 = DebugUnityEditor|Any CPU
 		{77CC2114-9934-4F61-8284-DDBCF3D150F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77CC2114-9934-4F61-8284-DDBCF3D150F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62D30DF-CAD6-4585-B1A7-2C4F66F0BF41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62D30DF-CAD6-4585-B1A7-2C4F66F0BF41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62D30DF-CAD6-4585-B1A7-2C4F66F0BF41}.DebugUnityEditor|Any CPU.ActiveCfg = DebugUnityEditor|Any CPU
+		{C62D30DF-CAD6-4585-B1A7-2C4F66F0BF41}.DebugUnityEditor|Any CPU.Build.0 = DebugUnityEditor|Any CPU
+		{C62D30DF-CAD6-4585-B1A7-2C4F66F0BF41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62D30DF-CAD6-4585-B1A7-2C4F66F0BF41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

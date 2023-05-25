@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UKnack;
+namespace UKnack.Common;
 
 public static partial class ColorHelpers
 {

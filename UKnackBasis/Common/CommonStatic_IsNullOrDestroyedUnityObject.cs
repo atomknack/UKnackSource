@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UKnack;
+namespace UKnack.Common;
 
 public static partial class CommonStatic
 {

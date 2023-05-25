@@ -4,6 +4,7 @@
 //----------------------------------------------------------------------------------------
 
 using System;
+using UKnack.Common;
 using UnityEngine.Events;
 
 namespace UKnack.Events;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace UKnack;
+namespace UKnack.Common;
 
 public static class EnumCachedDistinct<GenericEnum> where GenericEnum : struct, Enum
 {

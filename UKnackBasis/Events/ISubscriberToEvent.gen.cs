@@ -3,10 +3,11 @@
 // Changes will be lost if the code is regenerated.</auto-generated>
 //----------------------------------------------------------------------------------------
 
+using UKnack.Common;
 
 namespace UKnack.Events;
 
-public interface ISubscriberToEvent : Common.IHaveDescription
+public interface ISubscriberToEvent : IHaveDescription
 {
     public void OnEventNotification();
     // public string Description { get; }

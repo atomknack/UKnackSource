@@ -3,6 +3,8 @@
 // Changes will be lost if the code is regenerated.</auto-generated>
 //----------------------------------------------------------------------------------------
     
+using UKnack.Common;
+
 namespace UKnack.Events;
 
 public interface IPublisher<T1,T2,T3> 

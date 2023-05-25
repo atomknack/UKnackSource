@@ -13,10 +13,5 @@ namespace UKnack.Events;
 public abstract class SOPublisher<T1,T2,T3> : ScriptableObjectWithReadOnlyName, IPublisher<T1,T2,T3>
 {  
     public abstract void Publish(T1 t1,T2 t2,T3 t3);
-
-    //protected abstract SOEvent<T1,T2,T3> GetEvent();
-    //public virtual void Publish(T1 t1,T2 t2,T3 t3) =>
-    //    //internalEvent.InternalInvokeOnlyForPublisher(t1,t2,t3);
-    //    GetEvent().InternalInvoke(t1,t2,t3);
 }
 

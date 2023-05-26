@@ -43,6 +43,9 @@
 			<HintPath>c:\Program Files\Unity\Hub\Editor\2022.2.0b8\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-	
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="$(GitBashPath) C:\GitHub\UKnackSourceToUKnackBasis.sh" />
+	</Target>
 
 </Project>

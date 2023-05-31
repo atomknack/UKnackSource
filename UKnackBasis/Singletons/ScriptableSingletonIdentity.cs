@@ -2,14 +2,14 @@
 using System.Collections.Concurrent;
 using UKnack.Common;
 
-namespace UKnack.Preconcrete.NamedSingletons;
+namespace UKnack.Singletons;
 
-public abstract partial class NamedSingletonIdentity: ScriptableObjectWithReadOnlyName, IHaveDescription
+public abstract partial class ScriptableSingletonIdentity: ScriptableObjectWithReadOnlyName, IHaveDescription
 {
     public abstract string Description { get; }
 
     [NonSerialized] 
-    protected static readonly ConcurrentDictionary<NamedSingletonIdentity, object> s_globalRegistry = new();
+    protected static readonly ConcurrentDictionary<ScriptableSingletonIdentity, object> s_globalRegistry = new();
     [NonSerialized]
     protected int _version = 0;
 

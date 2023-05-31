@@ -5,14 +5,14 @@ using System.Reflection;
 using System.Text;
 using UKnack.Attributes;
 using UKnack.Common;
-using UKnack.Preconcrete.NamedSingletons;
+using UKnack.Singletons;
 using UnityEngine;
 
 namespace UKnack.Concrete.NamedSingletons
 {
     [Obsolete("Not tested")]
-    [CreateAssetMenu(fileName = "NamedSingletonIdentity", menuName = "UKnack/NamedSingletonIdentity", order = 990)]
-    public class NamedSingletonIdentityWithLogInEditor : NamedSingletonIdentity
+    [CreateAssetMenu(fileName = "ScriptableSingletonIdentity", menuName = "UKnack/ScriptableSingletonIdentity", order = 990)]
+    public class ScriptableSingletonIdentityWithLogInEditor : ScriptableSingletonIdentity
     {
         [SerializeField] 
         private string _description = string.Empty;

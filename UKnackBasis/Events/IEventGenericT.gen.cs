@@ -12,11 +12,11 @@ namespace UKnack.Events;
 public static partial class IEventUnSubscribeNullSafeExtension
 {
     public static void UnsubscribeNullSafe<T>(this IEvent<T> ev, Action<T> subscriber)
-        { if (subscriber != null) ev.Unsubscribe(subscriber); }
+        { if (ev != null) ev.Unsubscribe(subscriber); }
     public static void UnsubscribeNullSafe<T>(this IEvent<T> ev, UnityEvent<T> subscriber)
-        { if (subscriber != null) ev.Unsubscribe(subscriber); }
+        { if (ev != null) ev.Unsubscribe(subscriber); }
     public static void UnsubscribeNullSafe<T>(this IEvent<T> ev, ISubscriberToEvent<T> subscriber)
-        { if (subscriber != null) ev.Unsubscribe(subscriber); }
+        { if (ev != null) ev.Unsubscribe(subscriber); }
 }
 public interface IEvent<T>
 {

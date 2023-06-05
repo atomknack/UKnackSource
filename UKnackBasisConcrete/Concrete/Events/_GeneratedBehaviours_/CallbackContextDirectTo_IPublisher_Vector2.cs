@@ -11,7 +11,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 namespace UKnack.Concrete.Events
 {
-    [AddComponentMenu("UKnack/CallbackContextTo/CallbackContextDirectTo_IPublisher_Vector2")]
+    [AddComponentMenu("UKnack/CallbackContextTo/To_IPublisher<Vector2>_DirectFrom_CallbackContext")]
     internal class CallbackContextDirectTo_IPublisher_Vector2 : MonoBehaviour, IPublisher<CallbackContext>
     {
         [SerializeField]

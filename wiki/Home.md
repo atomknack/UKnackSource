@@ -16,3 +16,15 @@ Documentation about specific aspects of UKnack available under [Attribution-NonC
 **[Attributes](https://github.com/atomknack/UKnackSource/wiki/Attributes)**
 
 **[Attributes-Picker](https://github.com/atomknack/UKnackSource/wiki/Attributes-Picker)**
+
+
+## Documentation conventions:
+
+<b>%TYPE%</b> 
+
+When there are multiple scripts that essentially do same thing for different types such group can be displayed as %TYPE% 
+
+<b>nongeneric</b> in documentation and in code
+
+Many scripts in this library are made with code generation. When generating concrete scripts there is need to name then in one conventional way. Therefore scripts that do same things at scripts with some concrete types, but have no calling parameters, used subtypes, etc... Have word nongeneric in place of type.
+

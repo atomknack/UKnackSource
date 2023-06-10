@@ -9,27 +9,27 @@ using UnityEngine;
 
 using static UnityEngine.InputSystem.InputAction;
 
-namespace UKnack.Concrete.Events
+namespace UKnack.Concrete.Input
 {
-    [AddComponentMenu("UKnack/CallbackContextTo/To_IPublisher<Vector2>_DirectFrom_CallbackContext")]
-    internal class CallbackContextDirectTo_IPublisher_Vector2 : MonoBehaviour, IPublisher<CallbackContext>
+    [AddComponentMenu("UKnack/CallbackContext/To_IPublisher<float>_DirectFrom_CallbackContext")]
+    internal class CallbackContextDirectTo_IPublisher_float : MonoBehaviour, IPublisher<CallbackContext>
     {
         [SerializeField]
-        [ValidReference(typeof(IPublisher<Vector2>), nameof(IPublisher<Vector2>.Validate), typeof(IPublisher<Vector2>))]
+        [ValidReference(typeof(IPublisher<float>), nameof(IPublisher<float>.Validate), typeof(IPublisher<float>))]
         [DisableEditingInPlaymode]
         private UnityEngine.Object _iPublisher;
 
-        private IPublisher<Vector2> _iPublisherAsInterface;
+        private IPublisher<float> _iPublisherAsInterface;
 
         public void Publish(CallbackContext ctx)
         {
-            Vector2 value = ctx.ReadValue<Vector2>();
+            float value = ctx.ReadValue<float>();
             _iPublisherAsInterface.Publish(value);
         }
 
         private void Awake()
         {
-            _iPublisherAsInterface = IPublisher<Vector2>.Validate(_iPublisher);
+            _iPublisherAsInterface = IPublisher<float>.Validate(_iPublisher);
         }
     }
 }

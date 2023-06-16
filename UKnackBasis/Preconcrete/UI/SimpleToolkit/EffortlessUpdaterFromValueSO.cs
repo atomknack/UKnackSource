@@ -21,7 +21,7 @@ public abstract class EffortlessUpdaterFromValueSO<T> : MonoBehaviour
 
     protected VisualElement _currentUpdatedUIElement;
 
-    protected IValue<T> _value;
+    protected IValue<T> _ivalue;
     protected abstract IValue<T> GetValidValueProvider();
     protected abstract string RawValueToStringConversion(T value);
 
@@ -32,9 +32,9 @@ public abstract class EffortlessUpdaterFromValueSO<T> : MonoBehaviour
         _currentUpdatedUIElement = layout.TryFindSomeKindOfTextStorage(_nameOfUpdatedUI);
         UIContainerValidation(_currentUpdatedUIElement, _nameOfUpdatedUI);
 
-        _value = GetValidValueProvider();
-        UpdateUIBasedOnStorage(_value.GetValue());
-        _value.Subscribe(UpdateUIBasedOnStorage);
+        _ivalue = GetValidValueProvider();
+        UpdateUIBasedOnStorage(_ivalue.GetValue());
+        _ivalue.Subscribe(UpdateUIBasedOnStorage);
     }
 
     private void UpdateUIBasedOnStorage(T value)
@@ -45,7 +45,7 @@ public abstract class EffortlessUpdaterFromValueSO<T> : MonoBehaviour
     protected void OnDisable()
     {
         UIContainerValidation(_currentUpdatedUIElement, _nameOfUpdatedUI);
-        _value.UnsubscribeNullSafe(UpdateUIBasedOnStorage);
+        _ivalue.UnsubscribeNullSafe(UpdateUIBasedOnStorage);
     }
 
     private static void UIContainerValidation(VisualElement storage, string nameOfStorage)

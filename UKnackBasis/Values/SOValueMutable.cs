@@ -19,7 +19,6 @@ public abstract class SOValueMutable<T> : SOValue<T>, IValueMutable<T>, IPublish
     /// if value will be set, then it will be set only after all subscribers notification of new value.
     /// </summary>
     /// <param name="value"></param>
-    [Obsolete("new version not tested")]
     public virtual void SetValue(T value)
     {
         SetValueWithoutNotify(value);

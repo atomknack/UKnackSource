@@ -5,49 +5,63 @@ using UnityEngine.Events;
 using UnityEngine.UIElements;
 using UKnack.Values;
 using UKnack.Preconcrete.UI.SimpleToolkit;
+using UKnack.Events;
 
 namespace UKnack.Concrete.UI.SimpleToolkit
 {
     [AddComponentMenu("UKnack/UI.SimpleToolkit/EffortlessSliderToFloatBinding")]
-    public class EffortlessSliderToFloatBinding : EffortlessUIElement_Slider
+    public class EffortlessSliderToFloatBinding : EffortlessUIElement_Slider, ISubscriberToEvent<float>
     {
+        private string _description = string.Empty;
+        public string Description => _description;
+
         [SerializeField]
         [ValidReference(typeof(SOValueMutable<float>), typeof(Values.SOPrefsAudioVolume))]
-        private SOValueMutable<float> valueProvider;
+        private SOValueMutable<float> _valueProvider;
 
         [SerializeField] 
         private UnityEvent<float> _onSliderUIChanged;
 
         private void OnValueChanged(ChangeEvent<float> ev)
         {
-            if (ev.newValue == valueProvider.RawValue)
+            if (ev.newValue == _valueProvider.RawValue)
                 return;
             if (ev.previousValue == ev.newValue)
                 return;
-            valueProvider.SetValue(ev.newValue);
+            _valueProvider.SetValue(ev.newValue);
             _onSliderUIChanged.Invoke(ev.newValue);
+        }
+
+        public void OnEventNotification(float value)
+        {
+            if (value == _slider.value)
+                return;
+            _slider.SetValueWithoutNotify(value);
         }
 
         protected override void OnEnable()
         {
+            _description = $"{nameof(EffortlessSliderToFloatBinding)} of {gameObject.name}";
+
             base.OnEnable();
 
-            if (valueProvider == null)
-                throw new System.ArgumentNullException(nameof(valueProvider));
+            if (_valueProvider == null)
+                throw new System.ArgumentNullException(nameof(_valueProvider));
 
             if (_onSliderUIChanged == null)
                 throw new System.ArgumentNullException(nameof(_onSliderUIChanged));
 
-            _slider.SetValueWithoutNotify(valueProvider.RawValue);
+            OnEventNotification(_valueProvider.RawValue);
             _slider.RegisterCallback<ChangeEvent<float>>(OnValueChanged);
+            _valueProvider.Subscribe(this);
         }
 
         protected override void OnDisable()
         {
             _slider.UnregisterCallback<ChangeEvent<float>>(OnValueChanged);
+            _valueProvider.Unsubscribe(this);
             base.OnDisable();
         }
-
     }
 
 }

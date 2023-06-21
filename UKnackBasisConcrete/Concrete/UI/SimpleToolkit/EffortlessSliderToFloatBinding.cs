@@ -32,8 +32,9 @@ namespace UKnack.Concrete.UI.SimpleToolkit
             _onSliderUIChanged.Invoke(ev.newValue);
         }
 
-        public void OnEventNotification(float value)
+        public void OnEventNotification(float _)
         {
+            float value = _valueProvider.RawValue;
             if (value == _slider.value)
                 return;
             _slider.SetValueWithoutNotify(value);

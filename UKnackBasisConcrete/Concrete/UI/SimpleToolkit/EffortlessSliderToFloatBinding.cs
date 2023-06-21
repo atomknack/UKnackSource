@@ -8,6 +8,7 @@ using UKnack.Preconcrete.UI.SimpleToolkit;
 
 namespace UKnack.Concrete.UI.SimpleToolkit
 {
+    [AddComponentMenu("UKnack/UI.SimpleToolkit/EffortlessSliderToFloatBinding")]
     public class EffortlessSliderToFloatBinding : EffortlessUIElement_Slider
     {
         [SerializeField]

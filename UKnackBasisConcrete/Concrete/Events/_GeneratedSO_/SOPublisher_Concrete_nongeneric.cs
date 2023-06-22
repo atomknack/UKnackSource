@@ -5,6 +5,7 @@
 using UnityEngine;
 using UKnack.Attributes;
 using UKnack.Events;
+using UKnack.Concrete.Values;
 
 using static UnityEngine.InputSystem.InputAction;
 

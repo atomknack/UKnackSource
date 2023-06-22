@@ -5,6 +5,7 @@
 using UnityEngine;
 using UKnack.Attributes;
 using UKnack.Events;
+using UKnack.Concrete.Values;
 
 using static UnityEngine.InputSystem.InputAction;
 
@@ -20,6 +21,7 @@ internal class SOPublisher_Concrete_Vector3 : SOPublisher<Vector3>
     [ValidReference(typeof(IEvent<Vector3>), nameof(IEvent<Vector3>.Validate),
         typeof(SOEvent<Vector3>),
         typeof(SOEvent_Concrete_Vector3)
+        , typeof(SOValueMutable_Concrete_Vector3)
     )] private SOEvent<Vector3> where;
 
     public override void Publish(Vector3 v)

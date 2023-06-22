@@ -13,25 +13,24 @@ namespace UKnack.Concrete.Events
 {
 
 /// This class not intended to be used in code, but only made for ease of creation scriptable object in Unity Editor
-[CreateAssetMenu(fileName = "PublisherToSOEvent_Vector2", menuName = "UKnack/Publishers/To Vector2")]
+[CreateAssetMenu(fileName = "PublisherToSOEvent_object_object", menuName = "UKnack/Publishers/To object_object")]
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-internal class SOPublisher_Concrete_Vector2 : SOPublisher<Vector2>
+internal class SOPublisher_Concrete_object_object : SOPublisher<object,object>
 {
     [SerializeField]
-    [ValidReference(typeof(IEvent<Vector2>), nameof(IEvent<Vector2>.Validate),
-        typeof(SOEvent<Vector2>),
-        typeof(SOEvent_Concrete_Vector2)
-        , typeof(SOValueMutable_Concrete_Vector2)
-    )] private SOEvent<Vector2> where;
+    [ValidReference(typeof(IEvent<object,object>), nameof(IEvent<object,object>.Validate),
+        typeof(SOEvent<object,object>),
+        typeof(SOEvent_Concrete_object_object)
+    )] private SOEvent<object,object> where;
 
-    public override void Publish(Vector2 v)
+    public override void Publish(object obj1,object obj2)
     {
         ValidateWhere();
-        where.InternalInvoke(v);
+        where.InternalInvoke(obj1,obj2);
     }
 
     internal void ValidateWhere() =>
-        IEvent<Vector2>.Validate(where);
+        IEvent<object,object>.Validate(where);
 
 }
 

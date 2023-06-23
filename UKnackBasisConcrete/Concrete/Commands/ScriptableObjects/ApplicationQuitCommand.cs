@@ -4,7 +4,7 @@ using UKnack.Commands;
 namespace UKnack.Concrete.Commands.ScriptableObjects
 {
 
-    [AddComponentMenu("UKnack/Commands/ApplicationQuitCommand")]
+    [CreateAssetMenu(fileName = "ApplicationQuitCommand", menuName = "UKnack/Commands/ApplicationQuitCommand")]
     public class ApplicationQuitCommand : CommandScriptableObject
     {
         public override void Execute()

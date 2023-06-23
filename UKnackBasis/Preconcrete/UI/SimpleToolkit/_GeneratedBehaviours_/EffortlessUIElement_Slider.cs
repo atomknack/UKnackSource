@@ -9,12 +9,13 @@
 #nullable disable
 
 using UKnack.Attributes;
+using UKnack.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace UKnack.Preconcrete.UI.SimpleToolkit;
 
-public abstract class EffortlessUIElement_Slider : MonoBehaviour
+public abstract class EffortlessUIElement_Slider : MonoBehaviour, ILayoutDependant
 {
     [SerializeField]
     [ProvidedComponent]
@@ -27,15 +28,24 @@ public abstract class EffortlessUIElement_Slider : MonoBehaviour
 
     protected Slider _slider { get; private set; }
 
-    protected virtual void OnEnable()
+    internal abstract void LayoutReady(VisualElement layout);
+    void ILayoutDependant.LayoutReady(VisualElement layout) => 
+        LayoutReady(layout);
+    internal abstract void LayoutGonnaBeDestroyedNow();
+    void ILayoutDependant.LayoutGonnaBeDestroyedNow() => 
+        LayoutGonnaBeDestroyedNow();
+
+    protected void OnEnable()
     {
         _document = ProvidedComponentAttribute.Provide<UIDocument>(this.gameObject, _document);
         _slider = _document.rootVisualElement.Q<Slider>(_sliderName);
         ThrowIfNotFoundVisualElement(_sliderName, _slider);
+        LayoutReady(_document.rootVisualElement);
     }
 
-    protected virtual void OnDisable()
+    protected void OnDisable()
     {
+        LayoutGonnaBeDestroyedNow();
     }
 
     protected static void ThrowIfNotFoundVisualElement(string id, VisualElement ve)
@@ -43,7 +53,6 @@ public abstract class EffortlessUIElement_Slider : MonoBehaviour
         if (ve == null)
             throw new System.ArgumentNullException($"button with id: {id} not found in UIDocument");
     }
-
 }
 
 

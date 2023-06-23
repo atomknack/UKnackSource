@@ -40,11 +40,9 @@ namespace UKnack.Concrete.UI.SimpleToolkit
             _slider.SetValueWithoutNotify(value);
         }
 
-        protected override void OnEnable()
+        internal override void LayoutReady(VisualElement layout)
         {
             _description = $"{nameof(EffortlessSliderToFloatBinding)} of {gameObject.name}";
-
-            base.OnEnable();
 
             if (_valueProvider == null)
                 throw new System.ArgumentNullException(nameof(_valueProvider));
@@ -57,7 +55,7 @@ namespace UKnack.Concrete.UI.SimpleToolkit
             _valueProvider.Subscribe(this);
         }
 
-        protected override void OnDisable()
+        internal override void LayoutGonnaBeDestroyedNow()
         {
             _slider.UnregisterCallback<ChangeEvent<float>>(OnValueChanged);
             _valueProvider.Unsubscribe(this);

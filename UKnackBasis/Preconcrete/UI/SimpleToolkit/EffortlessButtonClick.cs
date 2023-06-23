@@ -11,16 +11,13 @@ public abstract class EffortlessButtonClick : EffortlessUIElement_Button
 {
     protected abstract void ButtonClicked();
 
-    protected override void OnEnable()
+    internal override void LayoutReady(VisualElement layout)
     {
-        base.OnEnable();
         _button.clicked += ButtonClicked;
     }
 
-    protected override void OnDisable()
+    internal override void LayoutGonnaBeDestroyedNow()
     {
-        base.OnDisable();
         _button.clicked -= ButtonClicked;
     }
-
 }

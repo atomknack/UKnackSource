@@ -59,7 +59,6 @@ namespace UKnack.Concrete.UI.SimpleToolkit
         {
             _slider.UnregisterCallback<ChangeEvent<float>>(OnValueChanged);
             _valueProvider.Unsubscribe(this);
-            base.OnDisable();
         }
     }
 

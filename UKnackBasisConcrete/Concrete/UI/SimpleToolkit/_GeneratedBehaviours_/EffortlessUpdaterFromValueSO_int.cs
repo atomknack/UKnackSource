@@ -9,7 +9,7 @@ using UKnack.Attributes;
 using UKnack.Values;
 using UKnack.Preconcrete.UI.SimpleToolkit;
 
-namespace UKnack.UI
+namespace UKnack.Concrete.UI.SimpleToolkit
 {
 
     [AddComponentMenu("UKnack/UI.SimpleToolkit/EffortlessUpdaterFromValueSO/int")]

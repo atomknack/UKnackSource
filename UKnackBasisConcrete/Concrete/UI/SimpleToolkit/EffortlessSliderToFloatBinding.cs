@@ -10,7 +10,7 @@ using System;
 
 namespace UKnack.Concrete.UI.SimpleToolkit
 {
-    [Obsolete("use EffortlessSliderToRawSOValueFloatBinding instead")]
+    [Obsolete("pending deletion in Major 3 version, use EffortlessSliderToRawSOValueFloatBinding instead")]
     public class EffortlessSliderToFloatBinding : EffortlessUIElement_Slider, ISubscriberToEvent<float>
     {
         private string _description = string.Empty;

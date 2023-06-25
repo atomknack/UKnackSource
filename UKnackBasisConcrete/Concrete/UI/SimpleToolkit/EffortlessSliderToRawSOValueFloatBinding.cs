@@ -6,12 +6,11 @@ using UnityEngine.UIElements;
 using UKnack.Values;
 using UKnack.Preconcrete.UI.SimpleToolkit;
 using UKnack.Events;
-using System;
 
 namespace UKnack.Concrete.UI.SimpleToolkit
 {
-    [Obsolete("use EffortlessSliderToRawSOValueFloatBinding instead")]
-    public class EffortlessSliderToFloatBinding : EffortlessUIElement_Slider, ISubscriberToEvent<float>
+    [AddComponentMenu("UKnack/UI.SimpleToolkit/EffortlessSliderToRawSOValueFloatBinding")]
+    public class EffortlessSliderToRawSOValueFloatBinding : EffortlessUIElement_Slider, ISubscriberToEvent<float>
     {
         private string _description = string.Empty;
         public string Description => _description;

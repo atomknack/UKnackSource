@@ -1,5 +1,4 @@
 ﻿
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("UKnackBasisConcrete")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("UKnackEditorTools")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("UKnackPro")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("UKnackProConcrete")]

@@ -6,7 +6,11 @@ using UnityEngine;
 
 namespace UKnack.Values;
 
-public abstract class SOValueMutable<T> : SOValue<T>, IValueMutable<T>, IPublisher<T>
+public abstract class SOValueMutable<T> : 
+    SOValue<T>, 
+    IValueMutable<T>, 
+    IPublisher<T>, 
+    IValueSetterWithoutNotification<T>
 {
     //[SerializeField] private USetOrDefault<T> _value;
     public abstract T RawValue { get; protected set; }

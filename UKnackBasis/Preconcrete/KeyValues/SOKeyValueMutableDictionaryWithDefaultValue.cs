@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace UKnack.Preconcrete.KeyValues
 {
-    internal class SOKeyValueMutableDictionaryWithDefaultValue<TKey, TValue> : SOKeyValueMutable<TKey, TValue>
+    public class SOKeyValueMutableDictionaryWithDefaultValue<TKey, TValue> : SOKeyValueMutable<TKey, TValue>
     {
         [SerializeField]
         [Tooltip("Value that will be default (returned if no key in dictionary) on every game start(Serialization)")]
@@ -25,6 +25,7 @@ namespace UKnack.Preconcrete.KeyValues
             return _defaultValue;
         }
 
+        public virtual void Clear() => _dictionary.Clear();
         public override bool Remove(TKey key) => _dictionary.Remove(key);
 
         public override void SetValueWithoutNotify(TKey key, TValue value) => _dictionary[key] = value;

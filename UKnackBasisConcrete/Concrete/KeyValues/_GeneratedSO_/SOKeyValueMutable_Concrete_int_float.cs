@@ -10,7 +10,7 @@ using UnityEngine;
 namespace UKnack.Concrete.KeyValues
 {
     [CreateAssetMenu(fileName = "SOKeyValueMutable_int_float", menuName = "UKnack/SOKeyValueMutable/int_float_dictionary", order = 190)]
-    internal sealed class SOKeyValueMutable_Concrete_int_float : SOKeyValueMutableDictionaryWithDefaultValue<int, float>
+    public sealed class SOKeyValueMutable_Concrete_int_float : SOKeyValueMutableDictionaryWithDefaultValue<int, float>
     {
     }
 }

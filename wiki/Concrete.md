@@ -8,7 +8,7 @@ All classes located in it:
 - Each located in separate file that name is identical to class name. 
 - Expected be changed almost never
 - Any changes to the existing changes expected to be Unity serialized friendly in a way that no values of existing serialized scripts should be lost.
-- Any script from this namespace before removal should be marked as obsolete for at least 2 consecutive major versions (This can be changed if there will be breaking changes from Unity).
+- Any script from this namespace before removal should be marked as obsolete for at least ~~2~~ 1 consecutive major versions (This can be changed if there will be breaking changes from Unity).
 
 ## usual expected behavior
 

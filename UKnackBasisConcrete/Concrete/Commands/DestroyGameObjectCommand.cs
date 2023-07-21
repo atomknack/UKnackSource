@@ -6,7 +6,7 @@ using UKnack.Commands;
 
 namespace UKnack.Concrete.Commands
 {
-    [AddComponentMenu("UKnack/Commands/DestroyGameObject")]
+    [AddComponentMenu("UKnack/Commands/DestroyGameObjectCommand")]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public class DestroyGameObjectCommand : CommandMonoBehaviour
     {

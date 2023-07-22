@@ -28,10 +28,10 @@ public abstract class EffortlessUIElement_Button : MonoBehaviour, ILayoutDependa
 
     protected Button _button { get; private set; }
 
-    internal abstract void LayoutReady(VisualElement layout);
+    protected abstract void LayoutReady(VisualElement layout);
     void ILayoutDependant.LayoutReady(VisualElement layout) => 
         LayoutReady(layout);
-    internal abstract void LayoutGonnaBeDestroyedNow();
+    protected abstract void LayoutGonnaBeDestroyedNow();
     void ILayoutDependant.LayoutGonnaBeDestroyedNow() => 
         LayoutGonnaBeDestroyedNow();
 

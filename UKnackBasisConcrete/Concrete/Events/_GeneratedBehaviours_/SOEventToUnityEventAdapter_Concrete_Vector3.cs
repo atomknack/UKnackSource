@@ -3,9 +3,10 @@
 // Changes will be lost if the code is regenerated.</auto-generated>
 //----------------------------------------------------------------------------------------
 using UnityEngine;
+using UnityEngine.Events;
 using UKnack.Attributes;
 using UKnack.Events;
-using UKnack.Preconcrete.Events;
+using UKnack.Preconcrete.Commands;
 
 using static UnityEngine.InputSystem.InputAction;
 
@@ -16,14 +17,21 @@ namespace UKnack.Concrete.Events
     /// </summary>
     [AddComponentMenu("UKnack/SOEventToUnityEventAdapters/SOEvent_Vector3_toUnityEvent")]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    internal sealed class SOEventToUnityEventAdapter_Concrete_Vector3 : SOEventToUnityEventAdapter<Vector3>
+    internal sealed class SOEventToUnityEventAdapter_Concrete_Vector3 : AbstractCommandSubscribedToSOEvent<Vector3>
     {
         [SerializeField]
         [ValidReference(typeof(IEvent<Vector3>), nameof(IEvent<Vector3>.Validate))] 
         private SOEvent<Vector3> _subscribedTo;
 
-        protected override IEvent<Vector3> _iEvent => 
+        [SerializeField]
+        protected UnityEvent<Vector3> _unityEvent;
+
+        protected override IEvent<Vector3> SubscribedTo => 
             IEvent<Vector3>.Validate(_subscribedTo);
+
+        public override void Execute(Vector3 v) => 
+            _unityEvent?.Invoke(v);
+
     }
 }
 

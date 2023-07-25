@@ -3,10 +3,11 @@
 // Changes will be lost if the code is regenerated.</auto-generated>
 //----------------------------------------------------------------------------------------
 using UnityEngine;
+using UnityEngine.Events;
+using UKnack.Preconcrete.Commands;
 using UKnack.Attributes;
 using UKnack.Events;
 using UKnack.Values;
-using UKnack.Preconcrete.Events;
 
 using static UnityEngine.InputSystem.InputAction;
 
@@ -18,21 +19,31 @@ namespace UKnack.Concrete.Values
     /// </summary>
     [AddComponentMenu("UKnack/SOValueToUnityEventAdapters/SOValue_float_toUnityEvent")]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    internal sealed class SOValueToUnityEventAdapter_Concrete_float : SOEventToUnityEventAdapter<float>
+    internal sealed class SOValueToUnityEventAdapter_Concrete_float : AbstractCommandSubscribedToSOEvent<float>
     {
+        [SerializeField]
+        [ValidReference(typeof(IEvent<float>), nameof(IEvent<float>.Validate))] 
+        private SOEvent<float> _subscribedTo;
+
+        [SerializeField]
+        protected UnityEvent<float> _unityEvent;
+
         [SerializeField]
         [Tooltip("Subscribes UnityEvent to SOValue, OnEnable invokes UnityEvent with value of SOValue")]
         [ValidReference(typeof(IValue<float>), nameof(IValue<float>.Validate))] 
         private SOValue<float> _value;
-
-        protected override IEvent<float> _iEvent => 
-            IValue<float>.Validate(_value);
 
         private new void OnEnable()
         {
             base.OnEnable();
             _unityEvent?.Invoke(_value.GetValue());
         }
+
+        protected override IEvent<float> SubscribedTo => 
+            IEvent<float>.Validate(_subscribedTo);
+
+        public override void Execute(float t) => 
+            _unityEvent?.Invoke(t);
     }
 }
 

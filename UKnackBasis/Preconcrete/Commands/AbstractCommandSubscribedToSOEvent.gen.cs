@@ -16,20 +16,23 @@ public abstract class AbstractCommandSubscribedToSOEvent : CommandMonoBehaviour,
     //[ValidReference(typeof(IEvent))] //commented because this is not allowed
     //private SOEvent _subscribedTo;
 
-    public abstract IEvent SubscribedTo { get; }
+    private IEvent _iSubscribedTo;
+
+    protected abstract IEvent SubscribedTo { get; }
 
     public virtual void OnEventNotification() => 
         Execute();
 
     protected virtual void OnEnable()
     {
-        if (SubscribedTo == null)
-            throw new ArgumentNullException(nameof(SubscribedTo));
-        SubscribedTo.Subscribe(this);
+        _iSubscribedTo = SubscribedTo;
+        if (_iSubscribedTo == null)
+            throw new ArgumentNullException(nameof(_iSubscribedTo));
+        _iSubscribedTo.Subscribe(this);
     }
     protected virtual void OnDisable()
     {
-         SubscribedTo.UnsubscribeNullSafe(this);
+         _iSubscribedTo.UnsubscribeNullSafe(this);
     }
 }
 

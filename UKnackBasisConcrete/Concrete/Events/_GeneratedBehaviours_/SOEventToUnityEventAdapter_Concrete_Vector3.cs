@@ -24,7 +24,7 @@ namespace UKnack.Concrete.Events
         private SOEvent<Vector3> _subscribedTo;
 
         [SerializeField]
-        protected UnityEvent<Vector3> _unityEvent;
+        private UnityEvent<Vector3> _unityEvent;
 
         protected override IEvent<Vector3> SubscribedTo => 
             IEvent<Vector3>.Validate(_subscribedTo);

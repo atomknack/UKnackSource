@@ -26,7 +26,7 @@ namespace UKnack.Concrete.Values
         private SOEvent<int> _subscribedTo;
 
         [SerializeField]
-        protected UnityEvent<int> _unityEvent;
+        private UnityEvent<int> _unityEvent;
 
         [SerializeField]
         [Tooltip("Subscribes UnityEvent to SOValue, OnEnable invokes UnityEvent with value of SOValue")]

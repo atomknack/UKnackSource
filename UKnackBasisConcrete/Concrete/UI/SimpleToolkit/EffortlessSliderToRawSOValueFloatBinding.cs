@@ -28,11 +28,12 @@ namespace UKnack.Concrete.UI.SimpleToolkit
 
         private void OnValueChanged(ChangeEvent<float> ev)
         {
-            if (ev.newValue == _valueProvider.RawValue)
-                return;
             if (ev.previousValue == ev.newValue)
                 return;
-            _valueProvider.SetValue(ev.newValue);
+            float rawValue = ev.newValue;
+            if (rawValue == _valueProvider.RawValue)
+                return;
+            _valueProvider.SetValue(rawValue);
             _onSliderUIChanged.Invoke(ev.newValue);
         }
 

@@ -42,7 +42,7 @@ namespace UKnack.Concrete.UI.SimpleToolkit
 
         protected override void LayoutReady(VisualElement layout)
         {
-            _description = $"{nameof(EffortlessSliderToFloatBinding)} of {gameObject.name}";
+            _description = $"{nameof(EffortlessSliderToRawSOValueFloatBinding)} of {gameObject.name}";
 
             if (_valueProvider == null)
                 throw new System.ArgumentNullException(nameof(_valueProvider));

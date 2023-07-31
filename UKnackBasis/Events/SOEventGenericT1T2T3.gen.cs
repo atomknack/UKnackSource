@@ -222,7 +222,7 @@ protected virtual void Cleanup()
         //Debug.Log($"CSEvents:{subscribedByCSEvent.Count}, UnityEvents:{subscribedByUnityEvent.Count}");
         
         Cleanup();
-        CommonStatic.DoActionLater(500, () => 
+        CommonStatic.DoActionLaterInNewThread(500, () => 
             { 
                 //UnityEngine.Debug.Log("Checking count after wait"); 
                 DebugCheckCount(); 

@@ -6,7 +6,7 @@ namespace UKnack.Common;
 
 public static partial class CommonStatic
 {
-    public static void DoActionLater(int waitForMilliseconds, Action act)
+    public static void DoActionLaterInNewThread(int waitForMilliseconds, Action act)
     {
         // Spawn new thread to do concurrent work
         Thread newWorkerThread = new Thread(new ThreadStart(() => WorkerToDoActionLater.DoWork(waitForMilliseconds, act)));

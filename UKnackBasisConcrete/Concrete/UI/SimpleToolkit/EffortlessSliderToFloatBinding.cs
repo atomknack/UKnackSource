@@ -11,7 +11,7 @@ using System;
 namespace UKnack.Concrete.UI.SimpleToolkit
 {
     [Obsolete("pending deletion in Major 3 version, use EffortlessSliderToRawSOValueFloatBinding instead")]
-    public class EffortlessSliderToFloatBinding : EffortlessUIElement_Slider, ISubscriberToEvent<float>
+    public class EffortlessSliderToFloatBinding : EffortlessUIElement_Slider
     {
         private string _description = string.Empty;
         public string Description => _description;
@@ -23,43 +23,16 @@ namespace UKnack.Concrete.UI.SimpleToolkit
         [SerializeField] 
         private UnityEvent<float> _onSliderUIChanged;
 
-        private void OnValueChanged(ChangeEvent<float> ev)
+        [Obsolete("pending deletion in Major 3 version, use EffortlessSliderToRawSOValueFloatBinding instead")]
+        protected override void LayoutReadyAndElementFound(VisualElement layout)
         {
-            if (ev.newValue == _valueProvider.RawValue)
-                return;
-            if (ev.previousValue == ev.newValue)
-                return;
-            _valueProvider.SetValue(ev.newValue);
-            _onSliderUIChanged.Invoke(ev.newValue);
+            throw new NotImplementedException();
         }
 
-        public void OnEventNotification(float _)
+        [Obsolete("pending deletion in Major 3 version, use EffortlessSliderToRawSOValueFloatBinding instead")]
+        protected override void LayoutCleanupBeforeDestruction()
         {
-            float value = _valueProvider.RawValue;
-            if (value == _slider.value)
-                return;
-            _slider.SetValueWithoutNotify(value);
-        }
-
-        protected override void LayoutReady(VisualElement layout)
-        {
-            _description = $"{nameof(EffortlessSliderToFloatBinding)} of {gameObject.name}";
-
-            if (_valueProvider == null)
-                throw new System.ArgumentNullException(nameof(_valueProvider));
-
-            if (_onSliderUIChanged == null)
-                throw new System.ArgumentNullException(nameof(_onSliderUIChanged));
-
-            OnEventNotification(_valueProvider.RawValue);
-            _slider.RegisterCallback<ChangeEvent<float>>(OnValueChanged);
-            _valueProvider.Subscribe(this);
-        }
-
-        protected override void LayoutGonnaBeDestroyedNow()
-        {
-            _slider.UnregisterCallback<ChangeEvent<float>>(OnValueChanged);
-            _valueProvider.Unsubscribe(this);
+            throw new NotImplementedException();
         }
     }
 

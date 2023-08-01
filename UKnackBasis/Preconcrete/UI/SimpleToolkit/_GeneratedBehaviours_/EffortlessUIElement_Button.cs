@@ -15,7 +15,7 @@ using UnityEngine.UIElements;
 
 namespace UKnack.Preconcrete.UI.SimpleToolkit;
 
-public abstract class EffortlessUIElement_Button : MonoBehaviour, ILayoutDependant
+public abstract class EffortlessUIElement_Button : MonoBehaviour
 {
     [SerializeField]
     [ProvidedComponent]
@@ -28,24 +28,20 @@ public abstract class EffortlessUIElement_Button : MonoBehaviour, ILayoutDependa
 
     protected Button _button { get; private set; }
 
-    protected abstract void LayoutReady(VisualElement layout);
-    void ILayoutDependant.LayoutReady(VisualElement layout) => 
-        LayoutReady(layout);
-    protected abstract void LayoutGonnaBeDestroyedNow();
-    void ILayoutDependant.LayoutGonnaBeDestroyedNow() => 
-        LayoutGonnaBeDestroyedNow();
+    protected abstract void LayoutReadyAndElementFound(VisualElement layout);
+    protected abstract void LayoutCleanupBeforeDestruction();
 
     protected void OnEnable()
     {
         _document = ProvidedComponentAttribute.Provide<UIDocument>(this.gameObject, _document);
         _button = _document.rootVisualElement.Q<Button>(_buttonName);
         ThrowIfNotFoundVisualElement(_buttonName, _button);
-        LayoutReady(_document.rootVisualElement);
+        LayoutReadyAndElementFound(_document.rootVisualElement);
     }
 
     protected void OnDisable()
     {
-        LayoutGonnaBeDestroyedNow();
+        LayoutCleanupBeforeDestruction();
     }
 
     protected static void ThrowIfNotFoundVisualElement(string id, VisualElement ve)

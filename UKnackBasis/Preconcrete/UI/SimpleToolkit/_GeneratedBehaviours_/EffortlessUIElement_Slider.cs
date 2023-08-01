@@ -15,7 +15,7 @@ using UnityEngine.UIElements;
 
 namespace UKnack.Preconcrete.UI.SimpleToolkit;
 
-public abstract class EffortlessUIElement_Slider : MonoBehaviour, ILayoutDependant
+public abstract class EffortlessUIElement_Slider : MonoBehaviour
 {
     [SerializeField]
     [ProvidedComponent]
@@ -28,24 +28,20 @@ public abstract class EffortlessUIElement_Slider : MonoBehaviour, ILayoutDependa
 
     protected Slider _slider { get; private set; }
 
-    protected abstract void LayoutReady(VisualElement layout);
-    void ILayoutDependant.LayoutReady(VisualElement layout) => 
-        LayoutReady(layout);
-    protected abstract void LayoutGonnaBeDestroyedNow();
-    void ILayoutDependant.LayoutGonnaBeDestroyedNow() => 
-        LayoutGonnaBeDestroyedNow();
+    protected abstract void LayoutReadyAndElementFound(VisualElement layout);
+    protected abstract void LayoutCleanupBeforeDestruction();
 
     protected void OnEnable()
     {
         _document = ProvidedComponentAttribute.Provide<UIDocument>(this.gameObject, _document);
         _slider = _document.rootVisualElement.Q<Slider>(_sliderName);
         ThrowIfNotFoundVisualElement(_sliderName, _slider);
-        LayoutReady(_document.rootVisualElement);
+        LayoutReadyAndElementFound(_document.rootVisualElement);
     }
 
     protected void OnDisable()
     {
-        LayoutGonnaBeDestroyedNow();
+        LayoutCleanupBeforeDestruction();
     }
 
     protected static void ThrowIfNotFoundVisualElement(string id, VisualElement ve)

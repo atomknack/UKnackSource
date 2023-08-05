@@ -101,22 +101,35 @@ public class ValidReferenceAttributeDrawer : AbstractReferenceWithPickerDrawer
             BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
         if (method == null)
             throw new Exception($"Cannot find method: {_validReferenceAttribute.prefabValidationMethodName} in {_validReferenceAttribute.containerOfValidationMethod}");
-        if (method.IsStatic == false)
-            throw new Exception($"Verification's method should be static");
-
-
         if (validation == null)
         {
-            if (method.ReturnType.Equals(typeof(void)))
+            if (method.IsStatic)
             {
-                validation = (Action<UnityEngine.Object>)Delegate.CreateDelegate(typeof(Action<UnityEngine.Object>), method);
+                if (method.ReturnType.Equals(typeof(void)))
+                {
+                    validation = (Action<UnityEngine.Object>)Delegate.CreateDelegate(typeof(Action<UnityEngine.Object>), method);
+                }
+                else
+                {
+                    var d = (Func<UnityEngine.Object, object>)Delegate.CreateDelegate(typeof(Func<UnityEngine.Object, object>), method);
+                    validation = obj => d(obj);
+                }
             }
             else
             {
-                var d = (Func<UnityEngine.Object, object>)Delegate.CreateDelegate(typeof(Func<UnityEngine.Object, object>), method);
-                validation = obj => d(obj);
+                UnityEngine.Object target = property.serializedObject.targetObject;
+                if (method.ReturnType.Equals(typeof(void)))
+                {
+                    validation = (Action<UnityEngine.Object>)Delegate.CreateDelegate(typeof(Action<UnityEngine.Object>), target, method);
+                }
+                else
+                {
+                    var d = (Func<UnityEngine.Object, object>)Delegate.CreateDelegate(typeof(Func<UnityEngine.Object, object>), target, method);
+                    validation = obj => d(obj);
+                }
             }
         }
+
 
         validation(property.objectReferenceValue);
         //method.Invoke(null, new object[] { property.objectReferenceValue });

@@ -65,13 +65,27 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
         if (IsPlayingAndDisabled)
             return;
 
-
         Event e = Event.current;
+
+        if (_subtypes.Count == 1 && _subtypes[0] == typeof(UnityEngine.GameObject)) // GetTypeFromFieldInfo(fieldInfo))
+        {
+            if (e.type == EventType.MouseDown && e.button == 0 && KnackPickerButtonPosition(position).Contains(e.mousePosition))
+            {
+                ShowPicker(property, _subtypes[0], null, GameObjectValidateAsFilterPredicate);
+                return;
+            }
+            return;
+        }
+
         if (e.type == EventType.MouseDown && e.button == 0 && KnackPickerButtonPosition(position).Contains(e.mousePosition))
         {
             ShowPicker(property, _subtypes[0]);
             return;
         }
+
+        if (_subtypes.Count == 1)
+            return;
+
         if (e.type == EventType.MouseDown && e.button == 1 && KnackPickerButtonPosition(position).Contains(e.mousePosition))
         {
             GenericMenu contextMenu = new GenericMenu();
@@ -87,7 +101,7 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
             menu.AddItem(new GUIContent($"Pick as {context.FullName}"), false, () => ShowPicker(property, context));
     }
 
-    protected void ShowPicker(SerializedProperty property, Type pickerFilterType, string pickerTitle = null)
+    protected void ShowPicker(SerializedProperty property, Type pickerFilterType, string pickerTitle = null, Predicate<UnityEngine.Object> filter = null)
     {
         var targetObject = property.serializedObject.targetObject;
 
@@ -107,12 +121,15 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
         Undo.RecordObject(targetObject, "Picked");
         Type baseType = GetTypeFromFieldInfo(fieldInfo);
 
+        if (filter == null)
+            filter = x => x != null && pickerFilterType.IsAssignableFrom(x.GetType());
+
         var picker = ValidPicker.OpenPicker(
             pickerTitle == null ? $"Picker for basetype:{baseType}, with filter of {pickerFilterType}" : pickerTitle,
             property,
             baseType,
             owner,
-            x => x != null && pickerFilterType.IsAssignableFrom(x.GetType())
+            filter
             );
         picker.validate = validation;
         picker.onItemPick = x =>
@@ -205,5 +222,19 @@ public abstract class AbstractReferenceWithPickerDrawer : OneOfMarksAttributeDra
 
     protected static Rect KnackPickerButtonPosition(Rect propertyPosition) =>
         new Rect(propertyPosition.x, propertyPosition.y, 20, propertyPosition.height);
+
+    bool GameObjectValidateAsFilterPredicate(UnityEngine.Object obj)
+    {
+        try
+        {
+            validation(obj);
+        }
+        catch
+        {
+            return false;
+        }
+        return true;
+    }
+
 }
 #endif

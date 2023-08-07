@@ -39,7 +39,7 @@ public class ValidReferenceAttribute : PropertyAttribute //ValidReferenceAttribu
         else
             this.moreSubtypes = moreSubclasses;
     }
-    private static void NotNull(UnityEngine.Object obj)
+    internal static void NotNull(UnityEngine.Object obj)
     {
         if (obj == null)
             throw new ArgumentNullException("Object should not be null");

@@ -56,8 +56,18 @@ public class ValidReferenceAttributeDrawer : AbstractReferenceWithPickerDrawer
                 foreach (Type t in _validReferenceAttribute.moreSubtypes)
                     if (t != null)
                         AddUniquePickerType(_subtypes, t, baseFieldType);
-            //if(_subtypes.Count == 0)
+            
             AddUniquePickerType(_subtypes, GetTypeFromFieldInfo(fieldInfo), baseFieldType);
+
+            if (_subtypes.Count > 0)
+                return;
+            if (baseFieldType != typeof(UnityEngine.GameObject))
+                return;
+            if (_validReferenceAttribute.containerOfValidationMethod == typeof(ValidReferenceAttribute) &&
+                _validReferenceAttribute.prefabValidationMethodName == nameof(ValidReferenceAttribute.NotNull))
+                return;
+
+            _subtypes.Add(typeof(UnityEngine.GameObject));
         }
     }
 

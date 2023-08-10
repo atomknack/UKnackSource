@@ -10,17 +10,23 @@ public class ProvidedComponentAttribute : PropertyAttribute
 {
     public static T Provide<T>(GameObject owner, T currentProperty) where T : Component
     {
-        var result = currentProperty == null ? owner.GetComponentInParent<T>(includeInactive: true) : currentProperty;
+        T result = ProvideOrNull(owner, currentProperty);
         ThrowIfNull(result, typeof(T));
         return result;
     }
 
+    public static T ProvideOrNull<T>(GameObject owner, T currentProperty) where T : Component =>
+         currentProperty == null ? owner.GetComponentInParent<T>(includeInactive: true) : currentProperty;
+
     public static Component Provide(Type componentType, GameObject owner, Component currentProperty)
     {
-        var result = currentProperty == null ? owner.GetComponentInParent(componentType, includeInactive: true) : currentProperty;
+        Component result = ProvideOrNull(componentType, owner, currentProperty);
         ThrowIfNull(result, componentType);
         return result;
     }
+
+    public static Component ProvideOrNull(Type componentType, GameObject owner, Component currentProperty) =>
+        currentProperty == null ? owner.GetComponentInParent(componentType, includeInactive: true) : currentProperty;
 
     private static void ThrowIfNull(Component result, Type componentType)
     {

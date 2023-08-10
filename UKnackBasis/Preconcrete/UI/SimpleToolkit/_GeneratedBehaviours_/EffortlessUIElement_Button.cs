@@ -26,6 +26,9 @@ public abstract class EffortlessUIElement_Button : MonoBehaviour
     [DisableEditingInPlaymode]
     private string _buttonName;
 
+    protected (UIDocument document, string buttonName) EffortlessUIElement_Button_Fields 
+        => (_document, _buttonName);
+
     protected Button _button { get; private set; }
 
     protected abstract void LayoutReadyAndElementFound(VisualElement layout);

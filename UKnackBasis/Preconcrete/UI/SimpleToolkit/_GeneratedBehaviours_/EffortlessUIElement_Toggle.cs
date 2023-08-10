@@ -26,6 +26,9 @@ public abstract class EffortlessUIElement_Toggle : MonoBehaviour
     [DisableEditingInPlaymode]
     private string _toggleName;
 
+    protected (UIDocument document, string toggleName) EffortlessUIElement_Toggle_Fields 
+        => (_document, _toggleName);
+
     protected Toggle _toggle { get; private set; }
 
     protected abstract void LayoutReadyAndElementFound(VisualElement layout);

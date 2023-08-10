@@ -26,6 +26,9 @@ public abstract class EffortlessUIElement_Slider : MonoBehaviour
     [DisableEditingInPlaymode]
     private string _sliderName;
 
+    protected (UIDocument document, string sliderName) EffortlessUIElement_Slider_Fields 
+        => (_document, _sliderName);
+
     protected Slider _slider { get; private set; }
 
     protected abstract void LayoutReadyAndElementFound(VisualElement layout);

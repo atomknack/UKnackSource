@@ -29,6 +29,16 @@ public static partial class UIStatic
         return true;
     }
 
+    public static TElement GetOrThrow<TElement>(this VisualElement from, string what) where TElement : VisualElement
+    {
+        if (string.IsNullOrWhiteSpace(what))
+            throw new System.Exception($"Identity of the received element must not be empty");
+        var result = from.Q<TElement>(what);
+        if (result == null)
+            throw new System.Exception($"Cannot find {nameof(TElement)} with id {what} from: {from.name} of {from.GetType().Name}");
+        return result;
+    }
+
     /*
     public static void RemoveAllChildren(this VisualElement @this) // just @this.Clear();
     {

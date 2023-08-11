@@ -30,16 +30,22 @@ public static partial class UIStatic
     {
         if (el == null)
             return null;
-        if (el is Label label)
-        {
-            label.text = text;
-            return el;
-        }
         if (el is TextField field)
         {
             field.SetValueWithoutNotify(text);
             return el;
         }
+        if (el is TextElement textElement)
+        {
+            var valChanged = (INotifyValueChanged<string>)el;
+            if (valChanged.value != text)
+                valChanged.SetValueWithoutNotify(text);
+        }
+        //if (el is Label label) //Label is TextElement
+        //{
+        //    label.text = text;
+        //    return el;
+        //}
         return null;
     }
 }

@@ -42,6 +42,12 @@ public struct USetOrDefault<T> : IValueGetter<T>, IValueSetter<T>  //, ISerializ
         //SetLastValue();
     }
 
+ 
+    public USetOrDefault(T defaultValue)
+        {
+        _defaultValue = defaultValue;
+        }
+ 
 
     /*
     public void OnAfterDeserialize() =>

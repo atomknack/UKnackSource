@@ -22,12 +22,12 @@ namespace UKnack.Concrete.Values
     internal sealed class SOValueToUnityEventAdapter_Concrete_Vector2 : AbstractCommandSubscribedToSOEvent<Vector2>
     {
         [SerializeField]
-        private UnityEvent<Vector2> _unityEvent;
-
-        [SerializeField]
         [Tooltip("Subscribes UnityEvent to SOValue, OnEnable invokes UnityEvent with value of SOValue")]
         [ValidReference(typeof(IValue<Vector2>), nameof(IValue<Vector2>.Validate))] 
         private SOValue<Vector2> _value;
+
+        [SerializeField]
+        private UnityEvent<Vector2> _unityEvent;
 
         private new void OnEnable()
         {

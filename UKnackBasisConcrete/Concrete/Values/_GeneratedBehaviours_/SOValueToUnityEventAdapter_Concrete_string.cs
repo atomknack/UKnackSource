@@ -22,10 +22,6 @@ namespace UKnack.Concrete.Values
     internal sealed class SOValueToUnityEventAdapter_Concrete_string : AbstractCommandSubscribedToSOEvent<string>
     {
         [SerializeField]
-        [ValidReference(typeof(IEvent<string>), nameof(IEvent<string>.Validate))] 
-        private SOEvent<string> _subscribedTo;
-
-        [SerializeField]
         private UnityEvent<string> _unityEvent;
 
         [SerializeField]
@@ -40,7 +36,7 @@ namespace UKnack.Concrete.Values
         }
 
         protected override IEvent<string> SubscribedTo => 
-            IEvent<string>.Validate(_subscribedTo);
+            IEvent<string>.Validate(_value);
 
         public override void Execute(string s) => 
             _unityEvent?.Invoke(s);

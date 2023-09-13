@@ -38,7 +38,7 @@ public abstract class EffortlessUIElement_Toggle : MonoBehaviour
     {
         _document = ProvidedComponentAttribute.Provide<UIDocument>(this.gameObject, _document);
         _toggle = _document.rootVisualElement.Q<Toggle>(_toggleName);
-        ThrowIfNotFoundVisualElement(_toggleName, _toggle);
+        ThrowIfNull(_toggle, _toggleName);
         LayoutReadyAndElementFound(_document.rootVisualElement);
     }
 
@@ -47,10 +47,10 @@ public abstract class EffortlessUIElement_Toggle : MonoBehaviour
         LayoutCleanupBeforeDestruction();
     }
 
-    protected static void ThrowIfNotFoundVisualElement(string id, VisualElement ve)
+    private static void ThrowIfNull(Toggle ve, string id)
     {
         if (ve == null)
-            throw new System.ArgumentNullException($"button with id: {id} not found in UIDocument");
+            throw new System.ArgumentNullException($"Toggle with id: {id} not found in UIDocument");
     }
 }
 

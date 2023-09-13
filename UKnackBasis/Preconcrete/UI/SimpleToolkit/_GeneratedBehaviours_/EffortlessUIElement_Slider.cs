@@ -38,7 +38,7 @@ public abstract class EffortlessUIElement_Slider : MonoBehaviour
     {
         _document = ProvidedComponentAttribute.Provide<UIDocument>(this.gameObject, _document);
         _slider = _document.rootVisualElement.Q<Slider>(_sliderName);
-        ThrowIfNotFoundVisualElement(_sliderName, _slider);
+        ThrowIfNull(_slider, _sliderName);
         LayoutReadyAndElementFound(_document.rootVisualElement);
     }
 
@@ -47,10 +47,10 @@ public abstract class EffortlessUIElement_Slider : MonoBehaviour
         LayoutCleanupBeforeDestruction();
     }
 
-    protected static void ThrowIfNotFoundVisualElement(string id, VisualElement ve)
+    private static void ThrowIfNull(Slider ve, string id)
     {
         if (ve == null)
-            throw new System.ArgumentNullException($"button with id: {id} not found in UIDocument");
+            throw new System.ArgumentNullException($"Slider with id: {id} not found in UIDocument");
     }
 }
 

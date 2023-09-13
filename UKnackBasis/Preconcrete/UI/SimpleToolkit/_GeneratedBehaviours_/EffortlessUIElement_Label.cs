@@ -38,7 +38,7 @@ public abstract class EffortlessUIElement_Label : MonoBehaviour
     {
         _document = ProvidedComponentAttribute.Provide<UIDocument>(this.gameObject, _document);
         _label = _document.rootVisualElement.Q<Label>(_labelName);
-        ThrowIfNotFoundVisualElement(_labelName, _label);
+        ThrowIfNull(_label, _labelName);
         LayoutReadyAndElementFound(_document.rootVisualElement);
     }
 
@@ -47,10 +47,10 @@ public abstract class EffortlessUIElement_Label : MonoBehaviour
         LayoutCleanupBeforeDestruction();
     }
 
-    protected static void ThrowIfNotFoundVisualElement(string id, VisualElement ve)
+    private static void ThrowIfNull(Label ve, string id)
     {
         if (ve == null)
-            throw new System.ArgumentNullException($"button with id: {id} not found in UIDocument");
+            throw new System.ArgumentNullException($"Label with id: {id} not found in UIDocument");
     }
 }
 

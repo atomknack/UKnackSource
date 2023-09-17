@@ -15,7 +15,7 @@ namespace UKnack.Concrete.Events
 /// This class not intended to be used in code, but only made for ease of creation scriptable object in Unity Editor
 [CreateAssetMenu(fileName = "PublisherToSOEvent_CallbackContext", menuName = "UKnack/Publishers/To CallbackContext")]
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-internal class SOPublisher_Concrete_CallbackContext : SOPublisher<CallbackContext>
+public class SOPublisher_Concrete_CallbackContext : SOPublisher<CallbackContext>
 {
     [SerializeField]
     [ValidReference(typeof(IEvent<CallbackContext>), nameof(IEvent<CallbackContext>.Validate),

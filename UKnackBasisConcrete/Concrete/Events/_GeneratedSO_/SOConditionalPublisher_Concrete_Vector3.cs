@@ -13,7 +13,7 @@ namespace UKnack.Concrete.Events
 {
     /// This class not intended to be used in code, but only made for ease of creation scriptable object in Unity Editor
     [CreateAssetMenu(fileName = "ConditionalPublisherToSOEvent_Vector3 ", menuName = "UKnack/ConditionalPublishers/To Vector3")]
-    internal sealed class SOConditionalPublisher_Concrete_Vector3 : SOPublisher_Concrete_Vector3
+    public sealed class SOConditionalPublisher_Concrete_Vector3 : SOPublisher_Concrete_Vector3
     {
             [Tooltip("This publisher will publish only when this value is true, if value is false publish call will be silently ignored")]
             [SerializeField] 

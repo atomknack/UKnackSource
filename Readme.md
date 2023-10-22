@@ -1,10 +1,4 @@
 
-***
-### Notice:
-Development of this library is stopped in 18 September 2023. Maybe I will add fixes, maybe not.
-Starting from 1 January 2034 it could be licensed under MIT license: https://github.com/atomknack/UKnackBasis/blob/main/LICENSE
-***
-
 ### UKnack library source and documentation
 
 Compilled UPM package available at:

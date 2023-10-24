@@ -1,0 +1,26 @@
+
+using UnityEngine;
+using UnityEngine.Events;
+using UKnack.Events;
+
+using static UnityEngine.InputSystem.InputAction;
+
+namespace UKnack.Concrete.Events
+{
+
+    /// This class not intended to be used in code, but only made for ease of creation scriptable object in Unity Editor
+    [CreateAssetMenu(fileName = "SOEvent_<#=underscore#>", menuName = "UKnack/SOEvents/SOEvent_<#=underscore#>")]
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal sealed class <#=classname#> : SOEvent<#=concrete.GenericDeclaration#>
+    {
+        [SerializeField] private UnityEvent<#=concrete.GenericDeclaration#> _beforeSubscribers;
+        [SerializeField] private UnityEvent<#=concrete.GenericDeclaration#> _afterSubscribers;
+
+        internal override void InternalInvoke(<#=concrete.GenericArgumentsDeclaration()#>)
+        {
+            _beforeSubscribers.Invoke(<#=concrete.publishArguments#>);
+            base.InternalInvoke(<#=concrete.publishArguments#>);
+            _afterSubscribers.Invoke(<#=concrete.publishArguments#>);
+        }
+    }
+}

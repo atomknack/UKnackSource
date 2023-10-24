@@ -1,0 +1,76 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<#@ include file="..\ttinclude\_4_GenGenericType.ttinclude" #>
+<#@ include file="..\ttinclude\_6_concreteEvents.ttinclude" #>
+<#@ include file="..\ttinclude\_8_concreteEvents_Add_Values.ttinclude" #>
+<#@ include file="..\ttinclude\_10_proConcreteEvents.tinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+Generate(
+    "../../UKnackBasisConcrete/Concrete/Values/_GeneratedBehaviours_/", 
+    concreteEvents);
+
+Generate(
+    "../../UKnackProConcrete/Concrete/Values/_GeneratedBehaviours_/", 
+    proConcreteEvents);
+
+void Generate(string pathToSave, GenGenericType[] concreteEvents)
+{
+for(var i = 0; i<concreteEvents.Length; i++)
+    {
+    var concrete = concreteEvents[i];
+    string className = "SOValueToUnityEventAdapter_Concrete_" + concrete.resultFileName;
+    string filename = pathToSave+className+".cs";
+    tools.LogAndStartNewFileWithHeader(filename);;
+    #>
+using UnityEngine;
+using UnityEngine.Events;
+using UKnack.Preconcrete.Commands;
+using UKnack.Attributes;
+using UKnack.Events;
+using UKnack.Values;
+
+using static UnityEngine.InputSystem.InputAction;
+
+namespace UKnack.Concrete.Values
+{
+    /// <summary>
+    /// Subscribes UnityEvent to SOValue. 
+    /// And in OnEnable invokes UnityEvent with SOValue (Unlike SOEvent version of such script, that only waits for event).
+    /// </summary>
+    [AddComponentMenu("UKnack/SOValueToUnityEventAdapters/SOValue_<#=concrete.resultFileName#>_toUnityEvent")]
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal sealed class <#=className#> : AbstractCommandSubscribedToSOEvent<#=concrete.GenericDeclaration#>
+    {
+        [SerializeField]
+        [Tooltip("Subscribes UnityEvent to SOValue, OnEnable invokes UnityEvent with value of SOValue")]
+        [ValidReference(typeof(IValue<#=concrete.GenericDeclaration#>), nameof(IValue<#=concrete.GenericDeclaration#>.Validate))] 
+        private SOValue<#=concrete.GenericDeclaration#> _value;
+
+        [SerializeField]
+        private UnityEvent<#=concrete.GenericDeclaration#> _unityEvent;
+
+        private new void OnEnable()
+        {
+            base.OnEnable();
+            _unityEvent?.Invoke(_value.GetValue());
+        }
+
+        protected override IEvent<#=concrete.GenericDeclaration#> SubscribedTo => 
+            IEvent<#=concrete.GenericDeclaration#>.Validate(_value);
+
+        public override void Execute(<#=concrete.GenericArgumentsDeclaration()#>) => 
+            _unityEvent?.Invoke(<#=concrete.publishArguments#>);
+    }
+}
+
+<#  tools.EndBlock();
+    } #>
+<# 
+}
+tools.Process(true, false); //split files true, because we want separate files; //sync false because we don't want visual studio to create links to created files
+#>

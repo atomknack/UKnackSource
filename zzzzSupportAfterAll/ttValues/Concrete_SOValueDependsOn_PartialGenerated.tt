@@ -1,0 +1,108 @@
+<#@ template language="C#" hostspecific="true" debug="true"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Runtime.Remoting.Messaging" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+string pathToSave = "../../UKnackBasisConcrete/Concrete/Values/_GeneratedSO_/";
+string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+
+(string t,string classname)[] concreteTypes = new []{
+    ("bool", "SOValueBoolDependsOnOther"), 
+    ("bool", "SOInversedBoolValue"),
+    ("float", "SOPrefsAudioVolume"),
+    };
+
+for(var i = 0; i<concreteTypes.Length; i++)
+    {
+
+	var concrete = concreteTypes[i];
+    tools.LogAndStartNewFileWithHeader(filename(concrete.classname + "_PartialGenerated")); #>
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using UKnack.Attributes;
+using UKnack.Events;
+using UKnack.Values;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
+
+namespace UKnack.Concrete.Values
+{
+    public partial class <#=concrete.classname#>
+    {
+        // [SerializeField][PlaymodeDisabled] private SOValue<<#=concrete.t#>> _dependUpon;
+        // [NonSerialized]  bool _subscribedTo_dependUpon = false;
+        // private partial <#=concrete.t#> GetValue(<#=concrete.t#> parent, <#=concrete.t#> _value);
+        
+        protected virtual void DependUponValueChanged(<#=concrete.t#> newDependUponValue)
+        {
+            InvokeSubscribers(this, GetValue(newDependUponValue, RawValue));
+        }
+
+        protected virtual void TrySubscribeToProvider()
+        {
+            if (_subscribedTo_dependUpon == true)
+                return;
+            if (_dependUpon == null)
+                return;
+            _dependUpon.Subscribe(DependUponValueChanged);
+            _subscribedTo_dependUpon = true;
+        }
+
+
+        protected virtual void TryUnSubscribeFromProvider()
+        {
+            if (_subscribedTo_dependUpon == false)
+                return;
+            if (_dependUpon == null)
+                return;
+            if (SubscribersCount() == 0 ) 
+            {
+                _dependUpon.UnsubscribeNullSafe(DependUponValueChanged);
+                _subscribedTo_dependUpon = false;
+            }
+        }
+
+        public override void Subscribe(Action<<#=concrete.t#>> subscriber)
+        {
+            TrySubscribeToProvider();
+            base.Subscribe(subscriber);
+        }
+        public override void Subscribe(UnityEvent<<#=concrete.t#>> subscriber)
+        {
+            TrySubscribeToProvider();
+            base.Subscribe(subscriber);
+        }
+        public override void Subscribe(ISubscriberToEvent<<#=concrete.t#>> subscriber)
+        {
+            TrySubscribeToProvider();
+            base.Subscribe(subscriber);
+        }
+
+        internal override void Unsubscribe(Action<<#=concrete.t#>> subscriber)
+        {
+            base.Unsubscribe(subscriber);
+            TryUnSubscribeFromProvider();
+        }
+        internal override void Unsubscribe(UnityEvent<<#=concrete.t#>> subscriber)
+        {
+            base.Unsubscribe(subscriber);
+            TryUnSubscribeFromProvider();
+        }
+        internal override void Unsubscribe(ISubscriberToEvent<<#=concrete.t#>> subscriber)
+        {
+            base.Unsubscribe(subscriber);
+            TryUnSubscribeFromProvider();
+        }
+
+    }
+}
+<#  tools.EndBlock();
+    } #>
+<# tools.Process(true, false); #>

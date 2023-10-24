@@ -1,0 +1,67 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<#@ include file="..\ttinclude\_4_GenGenericType.ttinclude" #>
+<#@ include file="..\ttinclude\_10_concreteEvents_WithAllAdditions.ttinclude" #>
+<#@ include file="..\ttinclude\_10_proConcreteEvents.tinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+Generate(
+    "../../UKnackBasisConcrete/Concrete/Events/_GeneratedBehaviours_/", 
+    concreteEvents);
+
+Generate(
+    "../../UKnackProConcrete/Concrete/Events/_GeneratedBehaviours_/", 
+    proConcreteEvents);
+
+void Generate(string pathToSave, GenGenericType[] concreteEvents)
+{
+for(var i = 0; i<concreteEvents.Length; i++)
+    {
+    var concrete = concreteEvents[i];
+    string className = "SOEventToUnityEventAdapter_Concrete_" + concrete.resultFileName;
+    string filename = pathToSave+className+".cs";
+    tools.LogAndStartNewFileWithHeader(filename);;
+    #>
+using UnityEngine;
+using UnityEngine.Events;
+using UKnack.Attributes;
+using UKnack.Events;
+using UKnack.Preconcrete.Commands;
+
+using static UnityEngine.InputSystem.InputAction;
+
+namespace UKnack.Concrete.Events
+{
+    /// <summary>
+    /// Subscribes UnityEvent to SOEvent. 
+    /// </summary>
+    [AddComponentMenu("UKnack/SOEventToUnityEventAdapters/SOEvent_<#=concrete.resultFileName#>_toUnityEvent")]
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal sealed class <#=className#> : AbstractCommandSubscribedToSOEvent<#=concrete.GenericDeclaration#>
+    {
+        [SerializeField]
+        [ValidReference(typeof(IEvent<#=concrete.GenericDeclaration#>), nameof(IEvent<#=concrete.GenericDeclaration#>.Validate))] 
+        private SOEvent<#=concrete.GenericDeclaration#> _subscribedTo;
+
+        [SerializeField]
+        private UnityEvent<#=concrete.GenericDeclaration#> _unityEvent;
+
+        protected override IEvent<#=concrete.GenericDeclaration#> SubscribedTo => 
+            IEvent<#=concrete.GenericDeclaration#>.Validate(_subscribedTo);
+
+        public override void Execute(<#=concrete.GenericArgumentsDeclaration()#>) => 
+            _unityEvent?.Invoke(<#=concrete.publishArguments#>);
+
+    }
+}
+
+<#  tools.EndBlock();
+    } #>
+<#
+}
+tools.Process(true, false); //split files true, because we want separate files; //sync false because we don't want visual studio to create links to created files
+#>

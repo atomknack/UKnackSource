@@ -1,0 +1,5 @@
+﻿    /// <summary>
+    /// Subscribes reciever of event
+    /// </summary>
+    /// <param name="subscriber">To unsubscribe use UnsubscribeNullSafe extension method.
+    /// subscriber will be called when something is published to event</param>

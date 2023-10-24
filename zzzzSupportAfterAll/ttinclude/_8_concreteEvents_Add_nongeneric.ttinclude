@@ -1,0 +1,10 @@
+<#
+concreteEvents = concreteEvents.Concat( 
+	new [] 
+		{
+
+new GenGenericType("","nongeneric","", isValue: false) 
+
+		}
+	).ToArray();
+#>

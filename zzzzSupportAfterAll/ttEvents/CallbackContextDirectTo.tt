@@ -1,0 +1,55 @@
+﻿<#@ template language="C#" hostspecific="true" debug="true"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Runtime.Remoting.Messaging" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+string pathToSave = "../../UKnackBasisConcrete/Concrete/Input/_GeneratedBehaviours_/";
+string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+
+string[] concreteTypes = new []{"float", "Vector2"};
+
+
+for(var i = 0; i<concreteTypes.Length; i++)
+    {
+
+	string concrete = concreteTypes[i];
+    string classname = "CallbackContextDirectTo_IPublisher_" + concrete;
+    tools.LogAndStartNewFileWithHeader(filename(classname)); #>
+
+using UKnack.Attributes;
+using UKnack.Events;
+using UnityEngine;
+
+using static UnityEngine.InputSystem.InputAction;
+
+namespace UKnack.Concrete.Input
+{
+    [AddComponentMenu("UKnack/CallbackContext/To_IPublisher<<#=concrete#>>_DirectFrom_CallbackContext")]
+    internal class <#=classname#> : MonoBehaviour, IPublisher<CallbackContext>
+    {
+        [SerializeField]
+        [ValidReference(typeof(IPublisher<<#=concrete#>>), nameof(IPublisher<<#=concrete#>>.Validate), typeof(IPublisher<<#=concrete#>>))]
+        [DisableEditingInPlaymode]
+        private UnityEngine.Object _iPublisher;
+
+        private IPublisher<<#=concrete#>> _iPublisherAsInterface;
+
+        public void Publish(CallbackContext ctx)
+        {
+            <#=concrete#> value = ctx.ReadValue<<#=concrete#>>();
+            _iPublisherAsInterface.Publish(value);
+        }
+
+        private void Awake()
+        {
+            _iPublisherAsInterface = IPublisher<<#=concrete#>>.Validate(_iPublisher);
+        }
+    }
+}
+<#  tools.EndBlock();
+    } #>
+<# tools.Process(true, false); #>

@@ -1,0 +1,7 @@
+<#
+//comment that won't be included
+#>
+//this comment will be included
+<#
+//comment again won't be included
+#>

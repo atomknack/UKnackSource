@@ -1,0 +1,3 @@
+﻿<#@ template hostspecific="true" language="C#" #>
+<#@ parameter type="System.String" name="concrete" #>
+    public void Flip() => ExtensionsForSOValues.Flip(this);

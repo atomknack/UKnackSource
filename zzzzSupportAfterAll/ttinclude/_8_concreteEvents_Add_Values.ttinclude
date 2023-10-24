@@ -1,0 +1,27 @@
+<#
+concreteEvents = concreteEvents.Concat( 
+	new [] 
+		{
+new GenGenericType("string","string","s"),
+new GenGenericType("object","object","obj"),
+//new GenGenericType("short","short","t"),
+new GenGenericType("int","int","t"),
+//new GenGenericType("long","long","t"),
+new GenGenericType("float","float","t"),
+//new GenGenericType("double","double","t"),
+////// its double of other line new GenGenericType("string","string","s"),
+new GenGenericType("bool","bool","b"),
+new GenGenericType("Vector2","Vector2","v"),
+//new GenGenericType("Vector2Int","Vector2Int","v"),
+new GenGenericType("Vector3","Vector3","v"),
+//new GenGenericType("Vector3Int","Vector3Int","v"),
+		}
+	).ToArray();
+
+//string[] concreteTypes = new []{"byte", "short", "int", "bool", "string", "Vector3", "Vector3Int", "CallbackContext", "int int"};
+//GenGenericType[] concreteEvents = {
+//new GenGenericType("T1,T2,T3","GenericT1T2T3","t1,t2,t3"),
+//};
+
+#>
+

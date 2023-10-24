@@ -1,0 +1,62 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+//this script exists because Unity not very good with generics
+
+string pathToSave = "../../UKnackProConcrete/Concrete/UI/Dependants/_GeneratedUIUpdaterConcrete_/"; 
+string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+
+
+//this script exists because Unity not very good with generics
+
+string[] concreteTypes = new []{"bool", "int", "string", "float", "Vector2", "Vector3"};
+for(var i = 0; i<concreteTypes.Length; i++)
+    {
+	string concrete = concreteTypes[i];
+    string genericScriptname = "UIUpdaterFromSOValue";
+    string concreteClassname = genericScriptname + "_" + concrete;
+    tools.LogAndStartNewFileWithHeader(filename(concreteClassname)); #>
+
+using UnityEngine;
+using System.ComponentModel;
+using UKnack.Attributes;
+using UKnack.SOValues;
+using UKnack.Values;
+
+namespace UKnack.Concrete.UI.Dependants
+{
+
+[AddComponentMenu("UKnack/UIDependant/UIUpdater/UIUpdaterFromValueSO_<#=concrete#>")]
+[EditorBrowsable(EditorBrowsableState.Never)]
+[Browsable(false)]
+public sealed class <#=concreteClassname#> : <#=genericScriptname#><<#=concrete#>>
+{
+    [SerializeField][ValidReference(nameof(ValidIValue))] private SOValue<<#=concrete#>> _value;
+
+    protected override IValue<<#=concrete#>> GetValueProvider() 
+        => ValidIValue(_value);
+
+    protected override string RawValueToStringConversion(<#=concrete#> value)
+        => value.ToString();
+    
+
+    public static IValue<<#=concrete#>> ValidIValue(UnityEngine.Object value)
+    {
+        if (value==null)
+            throw new System.ArgumentNullException(nameof(value));
+        var asIValue = value as IValue<<#=concrete#>>;
+        if (asIValue == null)
+            throw new System.InvalidCastException($"{value.GetType()} is not compatible with {typeof(IValue<<#=concrete#>>)}");
+        return asIValue;
+    }
+}
+
+}
+<#  tools.EndBlock();
+    } #>
+<# tools.Process(true, false); #>

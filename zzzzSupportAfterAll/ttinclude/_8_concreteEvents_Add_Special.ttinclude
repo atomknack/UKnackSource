@@ -1,0 +1,17 @@
+<#
+concreteEvents = concreteEvents.Concat( 
+	new [] 
+		{
+
+new GenGenericType("string,string","string_string","s1,s2", isValue: false),
+//new GenGenericType("string,string,string","string_string_string","s1,s2,s3", isValue: false),
+new GenGenericType("object,object","object_object","obj1,obj2", isValue: false),
+//new GenGenericType("object,object,object","object_object_object","obj1,obj2,obj3", isValue: false),
+
+new GenGenericType("CallbackContext","CallbackContext","ctx", isValue: false),
+
+//new GenGenericType("T1,T2,T3","GenericT1T2T3","t1,t2,t3", isValue: false),
+
+		}
+	).ToArray();
+#>

@@ -1,0 +1,50 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<#@ include file="..\ttinclude\_4_GenGenericType.ttinclude" #>
+<#@ include file="..\ttinclude\_10_concreteEvents_WithAllAdditions.ttinclude" #>
+<#@ include file="..\ttinclude\_10_proConcreteEvents.tinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+
+Generate(
+    "../../UKnackBasisConcrete/Concrete/Events/_GeneratedSO_/", 
+    concreteEvents);
+
+Generate(
+    "../../UKnackProConcrete/Concrete/Events/_GeneratedSO_/", 
+    proConcreteEvents);
+
+void Generate(string pathToSave, GenGenericType[] concreteEvents)
+{
+string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+for(var i = 0; i<concreteEvents.Length; i++)
+    {
+    var concrete = concreteEvents[i];
+    string underscore = concrete.resultFileName; //concrete.Replace(' ', '_');
+    string classname;
+
+    classname = "SOEvent_Concrete_" + concrete.resultFileName;
+    tools.LogAndStartNewFileWithHeader(filename(classname)); #>
+<#@ include file="Concrete_SOEventS.ttinclude" #>
+
+
+<#  tools.EndBlock();
+    classname = "SOConditionalPublisher_Concrete_" + concrete.resultFileName;
+    tools.LogAndStartNewFileWithHeader(filename(classname)); #>
+<#@ include file="Concrete_SOEventS_SOConditionalPublisher.ttinclude" #>
+
+<#  tools.EndBlock();
+    classname = "SOPublisher_Concrete_" + concrete.resultFileName;
+    tools.LogAndStartNewFileWithHeader(filename(classname)); #>
+<#@ include file="Concrete_SOEventS_SOEventPublisher.ttinclude" #>
+
+<#  tools.EndBlock();
+    } #>
+<# 
+}
+tools.Process(true, false); //split files true, because we want separate files; //sync false because we don't want visual studio to create links to created files
+#>

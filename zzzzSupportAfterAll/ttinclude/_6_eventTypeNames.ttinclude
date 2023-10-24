@@ -1,0 +1,4 @@
+<#
+(string evType, string varName)[] eventNames = new[]{("Action","subscribedByCSEvent"), ("UnityEvent","subscribedByUnityEvent"), ("ISubscriberToEvent","subscribedByISubscriberToEvent")};
+
+#>

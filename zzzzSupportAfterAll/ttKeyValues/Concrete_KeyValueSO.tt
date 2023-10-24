@@ -1,0 +1,43 @@
+<#@ template language="C#" hostspecific="true" debug="true"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Runtime.Remoting.Messaging" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+string pathToSave = "../../UKnackBasisConcrete/Concrete/KeyValues/_GeneratedSO_/";
+string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+
+string[] concreteTypes = new []{
+    "int_bool", 
+    "int_int", 
+    "int_float",
+    "int_string"
+    };
+
+for(var i = 0; i<concreteTypes.Length; i++)
+    {
+
+	string concrete = concreteTypes[i];
+    string concreteCommaSpace = concrete.Replace("_",", ");
+    string classname = "SOKeyValueMutable_Concrete_" + concrete;
+    tools.LogAndStartNewFileWithHeader(filename(classname)); #>
+
+    
+using UKnack.Preconcrete.KeyValues;
+using UnityEngine;
+
+namespace UKnack.Concrete.KeyValues
+{
+    [CreateAssetMenu(fileName = "SOKeyValueMutable_<#=concrete#>", menuName = "UKnack/SOKeyValueMutable/<#=concrete#>_dictionary", order = 190)]
+    public sealed class <#=classname#> : SOKeyValueMutableDictionaryWithDefaultValue<<#=concreteCommaSpace#>>
+    {
+    }
+}
+
+
+<#  tools.EndBlock();
+    } #>
+<# tools.Process(true, false); #>

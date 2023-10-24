@@ -1,0 +1,214 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<#@ include file="..\ttinclude\_4_GenGenericType.ttinclude" #>
+<#@ include file="..\ttinclude\_6_eventTypeNames.ttinclude" #>
+<#@ include file="..\ttinclude\_6_generics.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+for(var i = 0; i<generics.Length; i++)
+    {
+    string pathToSave = "../../UKnackBasis/Events/";
+
+	GenGenericType generic = generics[i];
+    string genericArgumentsSeparator = generic.GenericArgumentsDeclaration() == "" ? "" : ", "; 
+
+    string filename = pathToSave+"SOPublisher"+generic.resultFileName+".gen.cs";
+    
+    tools.LogAndStartNewFileWithHeader(filename); #>
+    
+using System;
+using UnityEngine;
+using UKnack.Values;
+using UKnack.Common;
+
+namespace UKnack.Events;
+
+public abstract class SOPublisher<#=generic.GenericDeclaration#> : ScriptableObjectWithReadOnlyName, IPublisher<#=generic.GenericDeclaration#><#
+    var isValue = generic.generic == "T" || generic.generic == "T1"; 
+    if (isValue) { #>, IValueSetter<#=generic.GenericDeclaration#><# } #>
+
+{  
+    public abstract void Publish(<#=generic.GenericArgumentsDeclaration()#>);
+<#  if (isValue) { #>
+    public void SetValue(<#=generic.generic#> value) => Publish(value);
+<#  } #>
+}
+
+<#  tools.EndBlock();
+    pathToSave = "../../UKnackBasis/Events/";
+    filename = pathToSave+"SOEvent"+generic.resultFileName+".gen.cs";
+    WriteLine($"//// Generating: {filename}");
+    tools.LogAndStartNewFileWithHeader(filename); #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+using System.Diagnostics;
+#endif
+using UnityEngine;
+using UnityEngine.Events;
+using UKnack.Common;
+
+namespace UKnack.Events;
+
+public abstract class SOEvent<#=generic.GenericDeclaration#> : ScriptableObjectWithReadOnlyName, IEvent<#=generic.GenericDeclaration#>
+{
+    [NonSerialized] internal readonly List<UnityEvent<#=generic.GenericDeclaration#>> subscribedByUnityEvent = new List<UnityEvent<#=generic.GenericDeclaration#>>();
+    [NonSerialized] internal readonly List<Action<#=generic.GenericDeclaration#>> subscribedByCSEvent = new List<Action<#=generic.GenericDeclaration#>>();
+    [NonSerialized] internal readonly List<ISubscriberToEvent<#=generic.GenericDeclaration#>> subscribedByISubscriberToEvent = new List<ISubscriberToEvent<#=generic.GenericDeclaration#>>();
+#if UNITY_EDITOR
+    [NonSerialized] protected readonly Dictionary<object,string> debugSubscriberDescription = new Dictionary<object,string>();
+#endif
+    
+    [NonSerialized] private string _savedName;
+
+<# foreach ((string evType, string varName) in eventNames) { #>
+<#@ include file="Event_Documentation_Subscribe.ttinclude" #>
+    public virtual void Subscribe(<#=evType#><#=generic.GenericDeclaration#> subscriber) 
+    {
+        if (subscriber == null)
+            throw new ArgumentNullException(nameof(subscriber));
+        <#=varName#>.Add(subscriber);
+#if UNITY_EDITOR
+var method= new StackFrame(1).GetMethod();
+        debugSubscriberDescription[subscriber] = $"method: {method.Name}, declared by: {method.DeclaringType}";
+#endif
+    }
+    internal virtual void Unsubscribe(<#=evType#><#=generic.GenericDeclaration#> subscriber)
+    {
+#if UNITY_EDITOR
+if (subscriber == null)
+    throw new ArgumentNullException(nameof(subscriber));
+int subscriberCount = <#=varName#>.Count(x=>x==subscriber);
+if ( subscriberCount!= 1)
+    throw new ArgumentException($"{nameof(subscriber)} has not 1, but {subscriberCount} references in Event {this.name}, fulldescription: {debugSubscriberDescription[subscriber]}");    
+debugSubscriberDescription.Remove(subscriber);
+#endif
+            
+        bool removed = <#=varName#>.Remove(subscriber);
+
+#if UNITY_EDITOR
+if (removed == false)
+    throw new ArgumentException($"could not remove {nameof(subscriber)}"); 
+#endif
+    }
+    void IEvent<#=generic.GenericDeclaration#>.Unsubscribe(<#=evType#><#=generic.GenericDeclaration#> subscriber) => 
+        Unsubscribe(subscriber);
+
+    internal virtual bool IsOneOfSubscribers(<#=evType#><#=generic.GenericDeclaration#> subscriber)
+    {
+        if (subscriber == null)
+            throw new ArgumentNullException(nameof(subscriber));
+
+        return <#=varName#>.Contains(subscriber);
+    }
+
+<# } //end of foreach event #>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal virtual void InternalInvoke(<#=generic.GenericArgumentsDeclaration()#>)
+    {
+        InvokeSubscribers(this<#=genericArgumentsSeparator#><#=generic.publishArguments#>);
+    }
+
+    internal static void InvokeSubscribers(SOEvent<#=generic.GenericDeclaration#> soe<#=genericArgumentsSeparator#><#=generic.GenericArgumentsDeclaration()#>)
+    {
+        if (soe==null)
+            throw new ArgumentNullException(nameof(soe));
+        //internalEvent.Publish(<#=generic.publishArguments#>);
+
+        for (int i = 0; i<soe.subscribedByCSEvent.Count; ++i)
+        {
+            soe.subscribedByCSEvent[i]?.Invoke(<#=generic.publishArguments#>);
+        }
+        for (int i = 0; i<soe.subscribedByUnityEvent.Count; ++i)
+        {
+            soe.subscribedByUnityEvent[i]?.Invoke(<#=generic.publishArguments#>);
+        }
+        for (int i = 0; i<soe.subscribedByISubscriberToEvent.Count; ++i)
+        {
+            if(soe.subscribedByISubscriberToEvent[i]!=null)
+                soe.subscribedByISubscriberToEvent[i].OnEventNotification(<#=generic.publishArguments#>);
+        }
+    }
+
+protected virtual void Init()
+{
+    _savedName = name;
+    //var countOnInitStart = CheckCount();
+    //if (countOnInitStart>0)
+    //    UnityEngineDebug.Log($"SOEvent {name} have {countOnInitStart} subscribers at init start");
+    //subscribedByCSEvent.Clear();
+}
+
+protected virtual void Cleanup()
+{
+}
+
+    protected void OnEnable()
+    {
+    Init();
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+#endif
+    }
+    protected void OnDisable()
+    {
+    Cleanup();
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+#endif
+    }
+
+#if UNITY_EDITOR
+    private void OnPlayModeStateChanged(PlayModeStateChange state)
+    {
+        if (state != PlayModeStateChange.ExitingPlayMode) 
+            return;
+        //Debug.Log($"CSEvents:{subscribedByCSEvent.Count}, UnityEvents:{subscribedByUnityEvent.Count}");
+        
+        Cleanup();
+        CommonStatic.DoActionLaterInNewThread(500, () => 
+            { 
+                //UnityEngine.Debug.Log("Checking count after wait"); 
+                DebugCheckCount(); 
+            });
+    }
+#endif
+    protected virtual int SubscribersCount() => subscribedByCSEvent.Count + subscribedByUnityEvent.Count + subscribedByISubscriberToEvent.Count;
+
+    private int DebugCheckCount()
+    {
+    //Debug.Log($"CheckCount");
+    int result = SubscribersCount();
+        if (result>0)
+        {
+            UnityEngine.Debug.LogError(
+$"CheckCount for {_savedName} NOT ZERO: CSEvents:{subscribedByCSEvent.Count}, UnityEvents:{subscribedByUnityEvent.Count}, ISubscriberToEvent:{subscribedByISubscriberToEvent.Count}");
+
+#if UNITY_EDITOR
+            foreach (var sub in subscribedByCSEvent)
+                UnityEngine.Debug.Log($"csEvent subscribed by ({debugSubscriberDescription[sub]}) not unsubscribed, check (un)subscriber object");
+
+            foreach (var sub in subscribedByUnityEvent)
+                UnityEngine.Debug.Log($"unityEvent subscribed by ({debugSubscriberDescription[sub]}) not unsubscribed, check (un)subscriber object");
+
+            foreach (var sub in subscribedByISubscriberToEvent)
+                UnityEngine.Debug.Log($"ISubscriberToEvent subscribed by ({sub.Description} from {debugSubscriberDescription[sub]}) not unsubscribed, check (un)subscriber object");
+#endif
+        }
+    return result;
+    }
+
+}
+
+<#  tools.EndBlock();
+    } #>
+<# 
+tools.Process(true, false); //split files true, because we want separate files; //sync false because we don't want visual studio to create links to created files
+#>

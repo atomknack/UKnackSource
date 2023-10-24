@@ -1,0 +1,8 @@
+<#
+GenGenericType[] generics = {
+new GenGenericType("","","", isValue: false),
+new GenGenericType("T","GenericT","t"),
+new GenGenericType("T1,T2","GenericT1T2","t1,t2"),
+new GenGenericType("T1,T2,T3","GenericT1T2T3","t1,t2,t3"),
+};
+#>

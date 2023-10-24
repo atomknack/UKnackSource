@@ -1,0 +1,40 @@
+<#+
+public readonly struct GenGenericType
+{
+    public readonly string generic;
+    public readonly string resultFileName;
+    public readonly string publishArguments;
+    public readonly bool isValue;
+
+    public bool IsGeneric => generic!="" && 
+        String.Compare(generic,"nongeneric",true) != 0;
+    
+    public string GenericArgumentsDeclaration()
+    {
+    if (IsGeneric==false)
+        return "";
+        
+    string[] genericSplited = generic.Split(',');
+    if (genericSplited.Length<2)
+        return $"{generic} {publishArguments}";
+    
+    var argumentsSplited = publishArguments.Split(',');
+    List<string> result = new List<string>();
+    
+    for(int i = 0; i< genericSplited.Length; ++i)
+        {
+        result.Add($"{genericSplited[i]} {argumentsSplited[i]}");
+        }
+    return string.Join(",", result);
+    }
+    
+    public string GenericDeclaration => IsGeneric ? $"<{generic}>" : "";
+    public GenGenericType(string generic, string resultFileName, string publishArguments, bool isValue = true)
+    {
+        this.generic = generic;
+        this.resultFileName = resultFileName;
+        this.publishArguments = publishArguments;
+        this.isValue = isValue;
+    }
+}
+#>

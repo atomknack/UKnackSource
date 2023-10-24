@@ -1,0 +1,201 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="ttEvents\EventScriptableObject.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EventScriptableObject.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\UKnackBasisConcrete\UKnackBasisConcrete.csproj" />
+		<ProjectReference Include="..\UKnackBasis\UKnackBasis.csproj" />
+		<ProjectReference Include="..\UKnackTests\UKnackTests.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="ttCommands\AbstractCommandSubscribedToSOEvent.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AbstractCommandSubscribedToSOEvent.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttCommands\Create_Commands.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Create_Commands.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttConcreteBehaviours\SOEventToUnityEventAdapter_FromGeneric.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SOEventToUnityEventAdapter_FromGeneric.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttConcreteBehaviours\SOValueToUnityEventAdapter_FromGeneric.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>SOValueToUnityEventAdapter_FromGeneric.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttEvents\CallbackContextDirectTo.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>CallbackContextDirectTo.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttEvents\Concrete_SOEventS.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Concrete_SOEventS.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttEvents\EventInterfaces.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>EventInterfaces.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttEvents\EventScriptableObject.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>EventScriptableObject.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttEvents\EventScriptableObject_AdapterTo_UnityEvent.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>EventScriptableObject_AdapterTo_UnityEvent.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttEvents\Preconcrete_EventScriptableObject_AdapterTo_UnityEvent.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Preconcrete_EventScriptableObject_AdapterTo_UnityEvent.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttKeyValues\Concrete_KeyValueSO.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Concrete_KeyValueSO.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttUI\DependantUIElement.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>DependantUIElement.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttUI\UIElementToRawSOValueFloatBinding.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>UIElementToRawSOValueFloatBinding.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttUI\EffortlessUIElement.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>EffortlessUIElement.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttUI\EffortlessUpdaterFromValueSO.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>EffortlessUpdaterFromValueSO.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttValues\Concrete_SOValueDependsOn_PartialGenerated.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Concrete_SOValueDependsOn_PartialGenerated.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttValues\Concrete_ValueSO.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Concrete_ValueSO.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttValues\IValueGenerators.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>IValueGenerators.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="ttValues\Preconcrete_USetOrDefault.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Preconcrete_USetOrDefault.tt</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="ttCommands\AbstractCommandSubscribedToSOEvent.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>AbstractCommandSubscribedToSOEvent.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttCommands\Create_Commands.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>Create_Commands.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttConcreteBehaviours\SOValueToUnityEventAdapter_FromGeneric.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>SOValueToUnityEventAdapter_FromGeneric.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttConcreteBehaviours\SOEventToUnityEventAdapter_FromGeneric.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>SOEventToUnityEventAdapter_FromGeneric.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttEvents\EventInterfaces.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>EventInterfaces.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttEvents\Concrete_SOEventS.tt">
+	    <LastGenOutput>Concrete_SOEventS.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	  <None Update="ttEvents\EventScriptableObject.tt">
+	    <LastGenOutput>EventScriptableObject.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	  <None Update="ttEvents\CallbackContextDirectTo.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>CallbackContextDirectTo.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttKeyValues\Concrete_KeyValueSO.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>Concrete_KeyValueSO.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttUI\UIElementToRawSOValueFloatBinding.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>UIElementToRawSOValueFloatBinding.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttUI\DependantUIElement.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>DependantUIElement.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttUI\EffortlessUIElement.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>EffortlessUIElement.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttUI\EffortlessUpdaterFromValueSO.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>EffortlessUpdaterFromValueSO.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttUI\ProUIUpdaterConcrete.tt">
+	    <Generator></Generator>
+	  </None>
+	  <None Update="ttValues\IValueGenerators.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>IValueGenerators.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttValues\Preconcrete_USetOrDefault.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>Preconcrete_USetOrDefault.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttValues\Concrete_SOValueDependsOn_PartialGenerated.tt">
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	    <LastGenOutput>Concrete_SOValueDependsOn_PartialGenerated.cs</LastGenOutput>
+	  </None>
+	  <None Update="ttValues\Concrete_ValueSO.tt">
+	    <LastGenOutput>Concrete_ValueSO.cs</LastGenOutput>
+	    <Generator>TextTemplatingFileGenerator</Generator>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+</Project>

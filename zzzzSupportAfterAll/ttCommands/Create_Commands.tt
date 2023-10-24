@@ -1,0 +1,77 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<#@ include file="..\ttinclude\_4_GenGenericType.ttinclude" #>
+<#@ include file="..\ttinclude\_6_eventTypeNames.ttinclude" #>
+<#@ include file="..\ttinclude\_6_generics.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+string pathToSave = "../../UKnackBasis/Commands/";
+
+for(var i = 0; i<generics.Length; i++)
+    {
+
+	GenGenericType generic = generics[i];
+    
+    string filename = pathToSave +$"ICommand{generic.resultFileName}"+".gen.cs";
+
+    tools.LogAndStartNewFileWithHeader(filename);
+    #>
+using UKnack.Common;
+
+namespace UKnack;
+
+public interface ICommand<#=generic.GenericDeclaration#> : IHaveDescription
+{
+    void Execute(<#=generic.GenericArgumentsDeclaration()#>);
+    ///public string Description { get; } //inherited from IHaveDescription
+}
+
+
+<#  
+    tools.EndBlock();
+    filename = pathToSave + $"CommandMonoBehaviour{generic.resultFileName}.gen.cs";
+
+    tools.LogAndStartNewFileWithHeader(filename);
+    #>
+using UnityEngine;
+using UKnack.Events;
+
+namespace UKnack.Commands;
+
+public abstract class CommandMonoBehaviour<#=generic.GenericDeclaration#> : MonoBehaviour, ICommand<#=generic.GenericDeclaration#>//, ISubscriberToEvent<#=generic.GenericDeclaration#>
+{
+    public abstract void Execute(<#=generic.GenericArgumentsDeclaration()#>);
+    //public virtual void OnEventNotification(<#=generic.GenericArgumentsDeclaration()#>) => 
+    //    Execute(<#=generic.publishArguments#>);
+    public virtual string Description => this.GetType().ToString();
+}
+
+    <#  
+    tools.EndBlock();
+    filename = pathToSave + $"CommandScriptableObject{generic.resultFileName}.gen.cs";
+
+    tools.LogAndStartNewFileWithHeader(filename);
+    #>
+using UnityEngine;
+using UKnack.Events;
+using UKnack.Common;
+
+namespace UKnack.Commands;
+
+public abstract class CommandScriptableObject<#=generic.GenericDeclaration#> : ScriptableObjectWithReadOnlyName, ICommand<#=generic.GenericDeclaration#>//, ISubscriberToEvent<#=generic.GenericDeclaration#>
+{
+    public abstract void Execute(<#=generic.GenericArgumentsDeclaration()#>);
+    //public virtual void OnEventNotification(<#=generic.GenericArgumentsDeclaration()#>) => 
+    //    Execute(<#=generic.publishArguments#>);
+    public virtual string Description => this.GetType().ToString();
+}
+
+<#  tools.EndBlock();
+    } #>
+<# 
+tools.Process(true, false); //split files true, because we want separate files; //sync false because we don't want visual studio to create links to created files
+#>

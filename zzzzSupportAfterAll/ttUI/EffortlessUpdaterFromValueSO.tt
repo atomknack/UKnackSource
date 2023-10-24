@@ -1,0 +1,84 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+//this script exists because Unity not very good with generics
+
+string filename(string filenameWithoutExtension, string pathToSave) =>pathToSave+filenameWithoutExtension+".cs";
+
+(string pathToSave, string genericScriptname, string nameSpace)[] basisAndPro = new[]{
+    (
+        "../../UKnackBasisConcrete/Concrete/UI/SimpleToolkit/_GeneratedBehaviours_/", 
+        "EffortlessUpdaterFromValueSO",
+        "UI.SimpleToolkit"
+        ),
+    (
+        "../../UKnackProConcrete/Concrete/UI/Dependants/_GeneratedUIUpdaterConcrete_/",  
+        "UIUpdaterFromSOValue",
+        "UI.Dependants"
+        )
+    };
+
+string[] concreteTypes = new []{
+    "bool", 
+    "float", 
+    "int", 
+    "string",  
+    "Vector2", 
+    //"Vector2Int", 
+    "Vector3", 
+    //"Vector3Int",
+    };
+for(var i = 0; i<concreteTypes.Length; i++)
+    {
+
+    foreach(var lib in basisAndPro)
+        {
+	        string concrete = concreteTypes[i];
+            string genericScriptname = lib.genericScriptname;
+            string concreteClassname = genericScriptname + "_" + concrete;
+            tools.LogAndStartNewFileWithHeader(filename(concreteClassname, lib.pathToSave)); #>
+
+using UnityEngine;
+using System.ComponentModel;
+using UKnack.Attributes;
+using UKnack.Values;
+using UKnack.Preconcrete.UI.SimpleToolkit;
+
+namespace UKnack.Concrete.<#=lib.nameSpace#>
+{
+
+    [AddComponentMenu("UKnack/<#=lib.nameSpace#>/<#=genericScriptname#>/<#=concrete#>")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Browsable(false)]
+    public sealed class <#=concreteClassname#> : <#=genericScriptname#><<#=concrete#>>
+    {
+        [SerializeField][ValidReference(nameof(ValidIValue))] private SOValue<<#=concrete#>> _value;
+
+        protected override IValue<<#=concrete#>> GetValidValueProvider() 
+            => ValidIValue(_value);
+
+        protected override string RawValueToStringConversion(<#=concrete#> value)
+            => value.ToString();
+    
+
+        public static IValue<<#=concrete#>> ValidIValue(UnityEngine.Object value)
+        {
+            if (value==null)
+                throw new System.ArgumentNullException(nameof(value));
+            var asIValue = value as IValue<<#=concrete#>>;
+            if (asIValue == null)
+                throw new System.InvalidCastException($"{value.GetType()} is not compatible with {typeof(IValue<<#=concrete#>>)}");
+            return asIValue;
+        }
+    }
+}
+
+<#  tools.EndBlock();
+        }
+    } #>
+<# tools.Process(true, false); #>

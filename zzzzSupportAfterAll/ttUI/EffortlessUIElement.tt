@@ -1,0 +1,88 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+//this script exists because Unity not very good with generics
+
+string pathToSave = "../../UKnackBasis/Preconcrete/UI/SimpleToolkit/_GeneratedBehaviours_/"; 
+string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+
+(string name, string lower)[] typeNames = new[]{
+    ("Button", "button"), 
+    ("Toggle",  "toggle"), 
+    ("Slider", "slider"),
+    ("Label", "label"),
+    ("VisualElement", "visualElement")
+    };
+
+for(var i = 0; i<typeNames.Length; i++)
+    {
+
+	var concrete = typeNames[i];
+
+    string name = concrete.name;
+    string lower = concrete.lower;
+
+    string genericScriptname = "EffortlessUIElement";
+    string concreteClassname = genericScriptname + "_" + concrete.name;
+    tools.LogAndStartNewFileWithHeader(filename(concreteClassname)); #>
+
+
+
+
+#nullable disable
+
+using UKnack.Attributes;
+using UKnack.UI;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace UKnack.Preconcrete.UI.SimpleToolkit;
+
+public abstract class <#=concreteClassname#> : MonoBehaviour
+{
+    [SerializeField]
+    [ProvidedComponent]
+    [DisableEditingInPlaymode]
+    private UIDocument _document;
+
+    [SerializeField]
+    [DisableEditingInPlaymode]
+    private string _<#=lower#>Name;
+
+    protected (UIDocument document, string <#=lower#>Name) <#=concreteClassname#>_Fields 
+        => (_document, _<#=lower#>Name);
+
+    protected <#=name#> _<#=lower#> { get; private set; }
+
+    protected abstract void LayoutReadyAndElementFound(VisualElement layout);
+    protected abstract void LayoutCleanupBeforeDestruction();
+
+    protected void OnEnable()
+    {
+        _document = ProvidedComponentAttribute.Provide<UIDocument>(this.gameObject, _document);
+        _<#=lower#> = _document.rootVisualElement.Q<<#=name#>>(_<#=lower#>Name);
+        ThrowIfNull(_<#=lower#>, _<#=lower#>Name);
+        LayoutReadyAndElementFound(_document.rootVisualElement);
+    }
+
+    protected void OnDisable()
+    {
+        LayoutCleanupBeforeDestruction();
+    }
+
+    private static void ThrowIfNull(<#=name#> ve, string id)
+    {
+        if (ve == null)
+            throw new System.ArgumentNullException($"<#=name#> with id: {id} not found in UIDocument");
+    }
+}
+
+
+<#  tools.EndBlock();
+    } #>
+<# tools.Process(true, false); #>

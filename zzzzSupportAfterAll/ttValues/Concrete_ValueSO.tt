@@ -1,0 +1,81 @@
+<#@ template language="C#" hostspecific="true" debug="true"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Runtime.Remoting.Messaging" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+// string basisPathToSave = "../../UKnackBasisConcrete/Concrete/Values/_GeneratedSO_/";
+// string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+
+string[] someNumericalTypes = new []{
+    "int", 
+    "float", 
+    };
+
+string[] concreteTypes = someNumericalTypes.Concat(new []{
+    "bool", 
+    "object", 
+    "string", 
+    "Vector2", 
+    "Vector3", 
+    }).ToArray();
+
+Dictionary<string,string> concreteAddons = new ();
+concreteAddons.Add("bool", "FlipMethodAddon");
+foreach(string t in someNumericalTypes)
+    concreteAddons.Add(t, "IncreaseMethodAddon");
+
+Generate(
+    "../../UKnackBasisConcrete/Concrete/Values/_GeneratedSO_/",
+    concreteTypes);
+
+Generate(
+    "../../UKnackProConcrete/Concrete/Values/_GeneratedSO_/",
+    new string[] {"byte", "short","long","Vector2Int","Vector3Int"});
+
+
+void Generate(string pathToSave, string[] concreteTypes)
+{
+for(var i = 0; i<concreteTypes.Length; i++)
+    {
+
+	string concrete = concreteTypes[i];
+    string className = "SOValueMutable_Concrete_" + concrete;
+    string filename = pathToSave+className+".cs";
+    tools.LogAndStartNewFileWithHeader(filename); #>
+
+using UnityEngine;
+using UKnack.Values;
+using UKnack.Preconcrete.Values;
+
+namespace UKnack.Concrete.Values
+{
+
+[CreateAssetMenu(fileName = "SOValue_<#=concrete#>", menuName = "UKnack/SOValueMutable/<#=concrete#>", order = 110)]
+public sealed class <#=className#> : SOValueMutable<<#=concrete#>>
+    {
+        [SerializeField] 
+        private USetOrDefault<<#=concrete#>> _value;
+
+        public override <#=concrete#> RawValue { get => _value.Value; protected set => _value.Value = value; }
+
+<#  if (concreteAddons.ContainsKey(concrete)) 
+    {
+        tools.IncludeFileWithContext($"{tools.Filename}_{concreteAddons[concrete]}.ttinclude",
+            new Dictionary<string, object>
+            {
+                { "concrete", concrete }, 
+            });
+    } #>
+
+    }
+
+}
+<#  tools.EndBlock();
+    } 
+}
+tools.Process(true, false); 
+#>

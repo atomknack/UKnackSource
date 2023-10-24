@@ -1,0 +1,37 @@
+
+using UnityEngine;
+using UKnack.Attributes;
+using UKnack.Events;
+using UKnack.Concrete.Values;
+
+using static UnityEngine.InputSystem.InputAction;
+
+namespace UKnack.Concrete.Events
+{
+
+/// This class not intended to be used in code, but only made for ease of creation scriptable object in Unity Editor
+[CreateAssetMenu(fileName = "PublisherToSOEvent_<#=underscore#>", menuName = "UKnack/Publishers/To <#=underscore#>")]
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+public class <#=classname#> : SOPublisher<#=concrete.GenericDeclaration#>
+{
+    [SerializeField]
+    [ValidReference(typeof(IEvent<#=concrete.GenericDeclaration#>), nameof(IEvent<#=concrete.GenericDeclaration#>.Validate),
+        typeof(SOEvent<#=concrete.GenericDeclaration#>),
+        typeof(SOEvent_Concrete_<#=underscore#>)
+<# if(concrete.isValue) { #>
+        , typeof(SOValueMutable_Concrete_<#=underscore#>)
+<# } // end of if isValue #>
+    )] private SOEvent<#=concrete.GenericDeclaration#> where;
+
+    public override void Publish(<#=concrete.GenericArgumentsDeclaration()#>)
+    {
+        ValidateWhere();
+        where.InternalInvoke(<#=concrete.publishArguments#>);
+    }
+
+    internal void ValidateWhere() =>
+        IEvent<#=concrete.GenericDeclaration#>.Validate(where);
+
+}
+
+}

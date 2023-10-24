@@ -1,0 +1,82 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<#@ include file="..\ttinclude\_4_GenGenericType.ttinclude" #>
+<#@ include file="..\ttinclude\_6_eventTypeNames.ttinclude" #>
+<#@ include file="..\ttinclude\_6_generics.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+string pathToSave = "../../UKnackBasis/Events/";
+
+for(var i = 0; i<generics.Length; i++)
+    {
+
+	GenGenericType generic = generics[i];
+    string genericArgumentsSeparator = generic.GenericArgumentsDeclaration() == "" ? "" : ", "; 
+
+    string filename = pathToSave + "IEvent"+generic.resultFileName+".gen.cs";
+    tools.LogAndStartNewFileWithHeader(filename); #>
+
+using System;
+using UKnack.Common;
+using UnityEngine.Events;
+
+namespace UKnack.Events;
+
+public static partial class IEventUnSubscribeNullSafeExtension
+{
+<# foreach ((string evType, string varName) in eventNames) { #>
+    public static void UnsubscribeNullSafe<#=generic.GenericDeclaration#>(this IEvent<#=generic.GenericDeclaration#> ev, <#=evType#><#=generic.GenericDeclaration#> subscriber)
+        { if (ev != null) ev.Unsubscribe(subscriber); }
+<# } //end of foreach event #>
+}
+public interface IEvent<#=generic.GenericDeclaration#>
+{
+    public static IEvent<#=generic.GenericDeclaration#> Validate(UnityEngine.Object obj) =>
+        CommonStatic.ValidCast<IEvent<#=generic.GenericDeclaration#>>(obj);
+
+<# foreach ((string evType, string varName) in eventNames) { #>
+<#@ include file="Event_Documentation_Subscribe.ttinclude" #>
+    public void Subscribe(<#=evType#><#=generic.GenericDeclaration#> subscriber);
+    internal void Unsubscribe(<#=evType#><#=generic.GenericDeclaration#> subscriber);
+
+<# } //end of foreach event #>
+}
+
+<#  tools.EndBlock();
+    filename = pathToSave + $"ISubscriberToEvent{generic.resultFileName}.gen.cs";
+    tools.LogAndStartNewFileWithHeader(filename); #>
+
+using UKnack.Common;
+
+namespace UKnack.Events;
+
+public interface ISubscriberToEvent<#=generic.GenericDeclaration#> : IHaveDescription
+{
+    public void OnEventNotification(<#=generic.GenericArgumentsDeclaration()#>);
+    // public string Description { get; }
+}
+<#  tools.EndBlock();
+    filename = pathToSave + "IPublisher"+generic.resultFileName+"Interface"+".gen.cs";
+    tools.LogAndStartNewFileWithHeader(filename); #>
+    
+using UKnack.Common;
+
+namespace UKnack.Events;
+
+public interface IPublisher<#=generic.GenericDeclaration#> 
+{
+    void Publish(<#=generic.GenericArgumentsDeclaration()#>);
+
+    public static IPublisher<#=generic.GenericDeclaration#> Validate(UnityEngine.Object obj) => 
+        CommonStatic.ValidCast<IPublisher<#=generic.GenericDeclaration#>>(obj);
+}
+
+<#  tools.EndBlock();
+    } #>
+<# 
+tools.Process(true, false); //split files true, because we want separate files; //sync false because we don't want visual studio to create links to created files
+#>

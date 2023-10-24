@@ -1,0 +1,133 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+//this script exists because Unity not very good with generics
+
+string filename(string filenameWithoutExtension, string pathToSave) =>pathToSave+filenameWithoutExtension+".cs";
+
+(
+    string pathToSave, 
+    string classPrefix,
+    string nameSpace, 
+    string generics,
+    string getterArguments,
+    string getterReturn,
+    string setterArgs
+)[] typeTypes = 
+new[]{
+    (
+        "../../UKnackBasis/Values/", 
+        "IValue",
+        "namespace UKnack.Values;",
+        "T",
+        "",
+        "T",
+        "T value"
+        ),
+    (
+        "../../UKnackBasis/KeyValues/",  
+        "IKeyValue",
+        "namespace UKnack.KeyValues;",
+        "TKey, TValue",
+        "TKey key",
+        "TValue",
+        "TKey key, TValue value"
+        )
+    };
+
+
+    string scriptName;
+    string scriptFullNameWithGenerics;
+foreach(var tt in typeTypes)
+    {
+        scriptName = tt.classPrefix;
+        scriptFullNameWithGenerics = $"{scriptName}<{tt.generics}>";
+        tools.LogAndStartNewFileWithHeader(filename(scriptName, tt.pathToSave)); #>
+
+using UKnack.Common;
+using UKnack.Events;
+
+<#=tt.nameSpace#>
+
+public partial interface <#=scriptFullNameWithGenerics#> : IEvent<<#=tt.generics#>>, <#=tt.classPrefix#>Getter<<#=tt.generics#>>
+{
+    public new static <#=scriptFullNameWithGenerics#> Validate(UnityEngine.Object obj) =>
+        CommonStatic.ValidCast<<#=scriptFullNameWithGenerics#>>(obj);
+}
+
+
+<#  tools.EndBlock();
+        scriptName = tt.classPrefix + "Mutable";
+        scriptFullNameWithGenerics = $"{scriptName}<{tt.generics}>";
+        tools.LogAndStartNewFileWithHeader(filename(scriptName, tt.pathToSave)); #>
+
+using UKnack.Common;
+
+<#=tt.nameSpace#>
+
+public partial interface <#=scriptFullNameWithGenerics#> : <#=tt.classPrefix#><<#=tt.generics#>>, <#=tt.classPrefix#>Setter<<#=tt.generics#>>
+{
+    public new static <#=scriptFullNameWithGenerics#> Validate(UnityEngine.Object obj) =>
+        CommonStatic.ValidCast<<#=scriptFullNameWithGenerics#>>(obj);
+}
+
+<#  tools.EndBlock();
+        scriptName = tt.classPrefix + "Getter";
+        scriptFullNameWithGenerics = $"{scriptName}<{tt.generics}>";
+        tools.LogAndStartNewFileWithHeader(filename(scriptName, tt.pathToSave)); #>
+
+using UKnack.Common;
+
+<#=tt.nameSpace#>
+
+public interface <#=scriptFullNameWithGenerics#>
+{
+    public <#=tt.getterReturn#> GetValue(<#=tt.getterArguments#>);
+
+    public static <#=scriptFullNameWithGenerics#> Validate(UnityEngine.Object obj) =>
+        CommonStatic.ValidCast<<#=scriptFullNameWithGenerics#>>(obj);
+}
+
+
+<#  tools.EndBlock();
+        scriptName = tt.classPrefix + "Setter";
+        scriptFullNameWithGenerics = $"{scriptName}<{tt.generics}>";
+        tools.LogAndStartNewFileWithHeader(filename(scriptName, tt.pathToSave)); #>
+
+using UKnack.Common;
+
+<#=tt.nameSpace#>
+
+public interface <#=scriptFullNameWithGenerics#>
+{
+    public void SetValue(<#=tt.setterArgs#>);
+
+    public static <#=scriptFullNameWithGenerics#> Validate(UnityEngine.Object obj) => 
+        CommonStatic.ValidCast<<#=scriptFullNameWithGenerics#>>(obj);
+
+}
+
+
+<#  tools.EndBlock();
+        scriptName = tt.classPrefix + "SetterWithoutNotification";
+        scriptFullNameWithGenerics = $"{scriptName}<{tt.generics}>";
+        tools.LogAndStartNewFileWithHeader(filename(scriptName, tt.pathToSave)); #>
+
+using UKnack.Common;
+
+<#=tt.nameSpace#>
+
+public interface <#=scriptFullNameWithGenerics#>
+{
+    void SetValueWithoutNotify(<#=tt.setterArgs#>);
+}
+
+
+<#  tools.EndBlock();
+    } #>
+<# tools.Process(true, false); #>

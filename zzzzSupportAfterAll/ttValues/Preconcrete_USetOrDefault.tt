@@ -1,0 +1,115 @@
+<#@ template language="C#" hostspecific="true" debug="true"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Runtime.Remoting.Messaging" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+string pathToSave = "../../UKnackBasis/Preconcrete/Values/_GeneratedSO_/";
+string filename(string filenameWithoutExtension) =>pathToSave+filenameWithoutExtension+".cs";
+
+(bool pp,string classname)[] concreteTypes = new []{(false, "USetOrDefault"), (true, "USetOrPrefsOrDefault")};
+
+for(var i = 0; i<concreteTypes.Length; i++)
+    {
+
+	var concrete = concreteTypes[i];
+    tools.LogAndStartNewFileWithHeader(filename(concrete.classname + ".gen")); #>
+using System;
+using UnityEngine;
+using UKnack.Values;
+using UKnack.Attributes;
+
+namespace UKnack.Preconcrete.Values;
+
+/// <summary>
+/// This struct intended to be used with scriptable objects
+/// </summary>
+[Serializable]
+public struct <#=concrete.classname#><T> : IValueGetter<T>, IValueSetter<T> <# if (concrete.pp){ #> where T: IEquatable<T><# } #> //, ISerializationCallbackReceiver
+{
+    [SerializeField]
+    [Tooltip("Value that will be default on every game start(Serialization)")]
+    [DisableEditingInPlaymode]
+    private T _defaultValue;
+    [NonSerialized] private bool _isSet;
+    [NonSerialized] private T _value;
+<# if (concrete.pp){ #>
+    [SerializeField]
+    [Tooltip("if this property empty, whitespaces or null, then no pref will be stored or loaded. \n")]
+    [DisableEditingInPlaymode]
+    private string _prefsKeyName;
+<# } #>
+    [SerializeField]
+    [Tooltip("This value is for debug only purposes, to watch last value that was get")]
+    private ValueDebugInfo<T> _debugLastValueGet;
+
+    [SerializeField]
+    [Tooltip("This value is for debug only purposes, to watch last value that was set")]
+    private ValueDebugInfo<T> _debugLastValueSet;
+
+    public T Value { get => GetValue(); set => SetValue(value); }
+    public T GetValue() =>
+        _debugLastValueGet.SetAndReturn( 
+            _isSet ? _value : <# if (concrete.pp){ #> GetPlayerPrefsOrDefault() <# } else { #> _defaultValue <# } #> 
+            );
+
+    public void SetValue(T value)
+    {
+        _isSet = true;
+<# if (concrete.pp){ #>
+        if (value.Equals(_value) == false)
+        {
+            if (string.IsNullOrEmpty(_prefsKeyName) == false)
+                Prefs.Loader.SetPref(_prefsKeyName, value);
+        }
+<# } #>
+        _value = _debugLastValueSet.SetAndReturn( value );
+        //SetLastValue();
+    }
+
+<# if (concrete.pp){ #>
+    private T GetPlayerPrefsOrDefault()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(_prefsKeyName))
+                _value = _defaultValue;
+            else
+                _value = (T)Prefs.Loader.GetPref(_prefsKeyName, typeof(T));
+        }
+        catch
+        {
+            _value = _defaultValue;
+        }
+        _isSet = true;
+        return _value;
+    }
+<# } else { #> 
+    public <#=concrete.classname#>(T defaultValue)
+        {
+        _defaultValue = defaultValue;
+        }
+<# } #> 
+
+    /*
+    public void OnAfterDeserialize() =>
+        SetLastValue();
+
+    public void OnBeforeSerialize() =>
+        SetLastValue();
+
+    private void SetLastValue()
+    {
+#if UNITY_EDITOR
+        _lastValue_Readonly = GetValue();
+#endif
+    }
+    */
+}
+
+<#  tools.EndBlock();
+    } #>
+<# tools.Process(true, false); #>

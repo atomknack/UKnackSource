@@ -1,0 +1,10 @@
+<#
+GenGenericType[] proConcreteEvents =  new [] 
+		{
+new GenGenericType("byte","byte","b"),
+new GenGenericType("short","short","num"),
+new GenGenericType("long","long","num"),
+new GenGenericType("Vector2Int","Vector2Int","v"),
+new GenGenericType("Vector3Int","Vector3Int","v")
+		};
+#>

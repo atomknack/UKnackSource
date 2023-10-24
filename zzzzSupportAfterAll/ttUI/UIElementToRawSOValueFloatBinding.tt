@@ -1,0 +1,124 @@
+<#@ template language="C#" hostspecific="True"#>
+<#@ include file="C:\Projects\DoubleEngine\Project\_Include\_0_AssemplyImports.ttinclude" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ include file="..\ttinclude\_1_AddonTools.ttinclude" #>
+<# var tools = AddonTools.Create(Host, GenerationEnvironment); #>
+// this file was generated as byproduct of generating *.gen.cs files from master template: <#=tools.Filename#>
+<# 
+Generate(
+    "../../UKnackBasisConcrete/Concrete/UI/SimpleToolkit/",
+    true,
+    false
+    );
+
+Generate(
+    "../../UKnackProConcrete/Concrete/UI/SimpleToolkit/",
+    true,
+    true
+    );
+
+Generate(
+    "../../UKnackProConcrete/Concrete/UI/Dependants/",
+    false,
+    false
+    );
+
+Generate(
+    "../../UKnackProConcrete/Concrete/UI/Dependants/",
+    false,
+    true
+    );
+
+//WIP for Dependants (when simpleToolkit is false)
+
+void Generate(string pathToSave, bool simpleToolkit, bool isToggle)
+{
+    string namespaceName = simpleToolkit ? "SimpleToolkit" : "Dependants";
+    string uiType = isToggle ? "Toggle" : "Slider";
+    string uiPrimitiveType = isToggle ? "bool" : "float";
+    string className = simpleToolkit ? $"Effortless{uiType}ToRawSOValueFloatBinding" : $"Dependant{uiType}ToRawSOValueFloatBinding" ;
+    string filename = pathToSave+className+".cs";
+
+    tools.LogAndStartNewFileWithHeader(filename);;
+    #>
+
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
+using UKnack.Attributes;
+using UKnack.Events;
+using UKnack.Values;
+using UKnack.Preconcrete.UI.<#=namespaceName#>;
+
+namespace UKnack.Concrete.UI.<#=namespaceName#>
+{
+<#  if (simpleToolkit) { #>
+    [AddComponentMenu("UKnack/UI.SimpleToolkit/Effortless<#=uiType#>ToRawSOValueFloatBinding")]
+    public class <#=className#> : EffortlessUIElement_<#=uiType#>, ISubscriberToEvent<float>
+<#  } else { #>
+    [System.Obsolete("not tested")]
+    [AddComponentMenu("UKnack/UI.Dependants/Dependant<#=uiType#>ToRawSOValueFloatBinding")]
+    public class <#=className#> : DependantUIElement_<#=uiType#>, ISubscriberToEvent<float>
+<#  } #>
+    {
+        private string _description = string.Empty;
+        public string Description => _description;
+
+        [SerializeField]
+        [ValidReference(typeof(SOValueMutable<float>), typeof(Values.SOPrefsAudioVolume))]
+        private SOValueMutable<float> _valueProvider;
+
+        [SerializeField] 
+        private UnityEvent<<#=uiPrimitiveType#>> _on<#=uiType#>UIChanged;
+
+        private void OnValueChanged(ChangeEvent<<#=uiPrimitiveType#>> ev)
+        {
+            if (ev.previousValue == ev.newValue)
+                return;
+            float rawValue = <#= isToggle ? "ev.newValue ? 1f : 0f" : "ev.newValue" #>;
+            if (rawValue == _valueProvider.RawValue)
+                return;
+            _valueProvider.SetValue(rawValue);
+            _on<#=uiType#>UIChanged.Invoke(ev.newValue);
+        }
+
+        public void OnEventNotification(float _)
+        {
+            <#=uiPrimitiveType#> value = <#= isToggle ? 
+            "Mathf.Abs(_valueProvider.RawValue - 1f) < 0.00001f;//approximal version of: _valueProvider.RawValue == 1f" : 
+            "_valueProvider.RawValue;" #>
+            if (value == _<#=uiType.ToLower()#>.value)
+                return;
+            _<#=uiType.ToLower()#>.SetValueWithoutNotify(value);
+        }
+
+        protected override void LayoutReadyAndElementFound(VisualElement layout)
+        {
+            _description = $"{nameof(<#=className#>)} of {gameObject.name}";
+
+            if (_valueProvider == null)
+                throw new System.ArgumentNullException(nameof(_valueProvider));
+
+            if (_on<#=uiType#>UIChanged == null)
+                throw new System.ArgumentNullException(nameof(_on<#=uiType#>UIChanged));
+
+            OnEventNotification(_valueProvider.RawValue);
+            _<#=uiType.ToLower()#>.RegisterCallback<ChangeEvent<<#=uiPrimitiveType#>>>(OnValueChanged);
+            _valueProvider.Subscribe(this);
+        }
+
+        protected override void LayoutCleanupBeforeDestruction()
+        {
+            _<#=uiType.ToLower()#>.UnregisterCallback<ChangeEvent<<#=uiPrimitiveType#>>>(OnValueChanged);
+            _valueProvider.Unsubscribe(this);
+        }
+    }
+}
+
+<#  
+    tools.EndBlock();
+}
+
+tools.Process(true, false); //split files true, because we want separate files; //sync false because we don't want visual studio to create links to created files
+#>
